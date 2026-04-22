@@ -169,6 +169,17 @@ const SUBMISSION_COOLDOWN_MS = 60_000;
 const CONTACT_FORM_COOLDOWN_KEY = 'nextstageflow_contact_form_cooldown_until';
 const LANGUAGE_STORAGE_KEY = 'nextstageflow_language';
 
+const isConfiguredEnvValue = (value: string, placeholderFragments: string[]) => {
+  const normalizedValue = value.trim();
+
+  if (!normalizedValue) {
+    return false;
+  }
+
+  const lowerValue = normalizedValue.toLowerCase();
+  return !placeholderFragments.some((fragment) => lowerValue.includes(fragment));
+};
+
 type Language = 'pt' | 'en' | 'es';
 
 type ContactFormState = {
@@ -979,10 +990,14 @@ export default function App() {
     label: content.languageNames[option],
     flagSrc: languageFlags[option],
   }));
-  const isEmailConfigured = Boolean(
-    EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY,
-  );
-  const isRecaptchaConfigured = Boolean(RECAPTCHA_SITE_KEY);
+  const isEmailConfigured =
+    isConfiguredEnvValue(EMAILJS_SERVICE_ID, ['your_', 'service_id']) &&
+    isConfiguredEnvValue(EMAILJS_TEMPLATE_ID, ['your_', 'template_id']) &&
+    isConfiguredEnvValue(EMAILJS_PUBLIC_KEY, ['your_', 'public_key']);
+  const isRecaptchaConfigured = isConfiguredEnvValue(RECAPTCHA_SITE_KEY, [
+    'your_',
+    'site_key',
+  ]);
   const isCooldownActive = cooldownUntil > Date.now();
 
   useEffect(() => {
