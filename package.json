@@ -7,7 +7,7 @@
     "node": ">=20 <25"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && node scripts/prepare-hostinger-output.mjs",
     "dev": "vite",
     "preview": "vite preview"
   },
