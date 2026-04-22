@@ -193,8 +193,10 @@ type ContactFormState = {
 };
 
 type ContactFormErrors = {
+  nome: string;
   email: string;
   whatsapp: string;
+  mensagem: string;
 };
 
 type ToastState = {
@@ -228,8 +230,10 @@ const initialFormState: ContactFormState = {
 };
 
 const initialFormErrors: ContactFormErrors = {
+  nome: '',
   email: '',
   whatsapp: '',
+  mensagem: '',
 };
 
 const languageToLocale: Record<Language, string> = {
@@ -370,11 +374,13 @@ const translations = {
       submit: 'Enviar e-mail',
       sending: 'Enviando...',
       validation: {
+        nameRequired: 'Informe seu nome.',
         emailRequired: 'Informe um e-mail.',
         emailInvalid: 'Digite um e-mail válido.',
         whatsappRequired: 'Informe um WhatsApp.',
         whatsappInvalidCode: 'Digite um número válido com código do país.',
         whatsappInvalidCountry: 'Digite um número válido para o país selecionado.',
+        messageRequired: 'Escreva sua mensagem.',
       },
     },
     privacy: {
@@ -559,11 +565,13 @@ const translations = {
       submit: 'Send email',
       sending: 'Sending...',
       validation: {
+        nameRequired: 'Please enter your name.',
         emailRequired: 'Please enter an email.',
         emailInvalid: 'Please enter a valid email.',
         whatsappRequired: 'Please enter a WhatsApp number.',
         whatsappInvalidCode: 'Please enter a valid number with country code.',
         whatsappInvalidCountry: 'Please enter a valid number for the selected country.',
+        messageRequired: 'Please write your message.',
       },
     },
     privacy: {
@@ -746,11 +754,13 @@ const translations = {
       submit: 'Enviar correo',
       sending: 'Enviando...',
       validation: {
+        nameRequired: 'Ingresa tu nombre.',
         emailRequired: 'Ingresa un correo electrónico.',
         emailInvalid: 'Ingresa un correo electrónico válido.',
         whatsappRequired: 'Ingresa un número de WhatsApp.',
         whatsappInvalidCode: 'Ingresa un número válido con código de país.',
         whatsappInvalidCountry: 'Ingresa un número válido para el país seleccionado.',
+        messageRequired: 'Escribe tu mensaje.',
       },
     },
     privacy: {
@@ -929,6 +939,22 @@ const validateEmail = (email: string, content: (typeof translations)[Language]) 
   return '';
 };
 
+const validateName = (name: string, content: (typeof translations)[Language]) => {
+  if (!sanitizeSingleLineInput(name, MAX_NAME_LENGTH)) {
+    return content.form.validation.nameRequired;
+  }
+
+  return '';
+};
+
+const validateMessage = (message: string, content: (typeof translations)[Language]) => {
+  if (!sanitizeMessageInput(message)) {
+    return content.form.validation.messageRequired;
+  }
+
+  return '';
+};
+
 const validateWhatsapp = (
   selectedCountry: CountryOption,
   whatsapp: string,
@@ -1094,18 +1120,32 @@ export default function App() {
       }
 
       if (field === 'nome') {
+        const nextName = sanitizeSingleLineInput(value, MAX_NAME_LENGTH, { trim: false });
+
         setFormState((current) => ({
           ...current,
-          nome: sanitizeSingleLineInput(value, MAX_NAME_LENGTH, { trim: false }),
+          nome: nextName,
+        }));
+
+        setFormErrors((current) => ({
+          ...current,
+          nome: nextName ? validateName(nextName, content) : '',
         }));
 
         return;
       }
 
       if (field === 'mensagem') {
+        const nextMessage = sanitizeMessageInput(value);
+
         setFormState((current) => ({
           ...current,
-          mensagem: sanitizeMessageInput(value),
+          mensagem: nextMessage,
+        }));
+
+        setFormErrors((current) => ({
+          ...current,
+          mensagem: nextMessage ? validateMessage(nextMessage, content) : '',
         }));
 
         return;
@@ -1157,13 +1197,15 @@ export default function App() {
 
   const validateContactForm = () => {
     const nextErrors: ContactFormErrors = {
+      nome: validateName(formState.nome, content),
       email: validateEmail(formState.email, content),
       whatsapp: validateWhatsapp(selectedCountry, formState.whatsapp, content),
+      mensagem: validateMessage(formState.mensagem, content),
     };
 
     setFormErrors(nextErrors);
 
-    return !nextErrors.email && !nextErrors.whatsapp;
+    return !nextErrors.nome && !nextErrors.email && !nextErrors.whatsapp && !nextErrors.mensagem;
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -1751,15 +1793,18 @@ export default function App() {
                 display: 'grid',
                 gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' },
                 gap: 4,
-                maxWidth: 'md',
+                justifyItems: 'stretch',
+                alignItems: 'stretch',
+                maxWidth: { xs: '100%', md: 1100 },
                 width: '100%',
                 mx: 'auto',
               }}
             >
-              <Box sx={{ minWidth: 0 }}>
+              <Box sx={{ minWidth: 0, width: '100%' }}>
                 <Card
                   elevation={3}
                   sx={{
+                    width: '100%',
                     height: '100%',
                     minHeight: { xs: 180, md: 220 },
                     display: 'flex',
@@ -1808,10 +1853,11 @@ export default function App() {
                 </Card>
               </Box>
 
-              <Box sx={{ minWidth: 0 }}>
+              <Box sx={{ minWidth: 0, width: '100%' }}>
                 <Card
                   elevation={3}
                   sx={{
+                    width: '100%',
                     height: '100%',
                     minHeight: { xs: 180, md: 220 },
                     display: 'flex',
@@ -1826,6 +1872,8 @@ export default function App() {
                     cursor: 'pointer',
                     transition: 'all 0.3s',
                     color: 'inherit',
+                    appearance: 'none',
+                    WebkitAppearance: 'none',
                     '&:hover': {
                       border: '1px solid rgba(249, 115, 22, 0.6)',
                       boxShadow: '0 10px 30px rgba(249, 115, 22, 0.2)',
@@ -1862,10 +1910,11 @@ export default function App() {
                 </Card>
               </Box>
 
-              <Box sx={{ minWidth: 0 }}>
+              <Box sx={{ minWidth: 0, width: '100%' }}>
                 <Card
                   elevation={3}
                   sx={{
+                    width: '100%',
                     height: '100%',
                     minHeight: { xs: 180, md: 220 },
                     display: 'flex',
@@ -2085,9 +2134,17 @@ export default function App() {
                   label={content.form.nameLabel}
                   value={formState.nome}
                   onChange={handleFieldChange('nome')}
+                  onBlur={() =>
+                    setFormErrors((current) => ({
+                      ...current,
+                      nome: validateName(formState.nome, content),
+                    }))
+                  }
                   required
                   fullWidth
                   inputProps={{ maxLength: MAX_NAME_LENGTH }}
+                  error={Boolean(formErrors.nome)}
+                  helperText={formErrors.nome || ' '}
                 />
                 <TextField
                   label={content.form.emailLabel}
@@ -2156,6 +2213,7 @@ export default function App() {
                         {...params}
                         label={content.form.countryLabel}
                         placeholder={content.form.countryPlaceholder}
+                        required
                       />
                     )}
                     renderOption={(props, option) => (
@@ -2198,12 +2256,21 @@ export default function App() {
                   label={content.form.messageLabel}
                   value={formState.mensagem}
                   onChange={handleFieldChange('mensagem')}
+                  onBlur={() =>
+                    setFormErrors((current) => ({
+                      ...current,
+                      mensagem: validateMessage(formState.mensagem, content),
+                    }))
+                  }
                   required
                   fullWidth
                   multiline
                   minRows={5}
                   inputProps={{ maxLength: MAX_MESSAGE_LENGTH }}
-                  helperText={`${formState.mensagem.length}/${MAX_MESSAGE_LENGTH}`}
+                  error={Boolean(formErrors.mensagem)}
+                  helperText={
+                    formErrors.mensagem || `${formState.mensagem.length}/${MAX_MESSAGE_LENGTH}`
+                  }
                 />
                 <Alert severity="info" sx={{ textAlign: 'left' }}>
                   {content.form.privacyInfo}
