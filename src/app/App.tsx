@@ -22,6 +22,11 @@ import {
   IconButton,
   Paper,
   Stack,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemText,
+  Divider,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -49,6 +54,8 @@ import {
   Speed,
   ShowChart,
   WhatsApp,
+  Menu,
+  Close,
 } from '@mui/icons-material';
 import logo from '../imports/Logo_NextStage_Flow_Clean.png';
 import flagBr from '../imports/flags/flag-br.svg';
@@ -846,13 +853,19 @@ const getInitialLanguage = (): Language => {
 
 const normalizeEmail = (email: string) => email.replace(/\s+/g, '').toLowerCase();
 
-const sanitizeSingleLineInput = (value: string, maxLength: number) =>
-  value
+const sanitizeSingleLineInput = (
+  value: string,
+  maxLength: number,
+  options?: { trim?: boolean },
+) => {
+  const sanitizedValue = value
     .replace(/[<>{}]/g, '')
     .replace(/[\u0000-\u001F\u007F]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
+    .replace(/[^\S\r\n]+/g, ' ')
     .slice(0, maxLength);
+
+  return options?.trim === false ? sanitizedValue : sanitizedValue.trim();
+};
 
 const sanitizeMessageInput = (value: string) =>
   value
@@ -940,6 +953,7 @@ export default function App() {
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formState, setFormState] = useState<ContactFormState>(initialFormState);
   const [formErrors, setFormErrors] = useState<ContactFormErrors>(initialFormErrors);
   const [captchaToken, setCaptchaToken] = useState('');
@@ -995,6 +1009,14 @@ export default function App() {
 
   const openContactModal = () => {
     setIsContactModalOpen(true);
+  };
+
+  const openMobileMenu = () => {
+    setIsMobileMenuOpen(true);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   const closeContactModal = () => {
@@ -1059,7 +1081,7 @@ export default function App() {
       if (field === 'nome') {
         setFormState((current) => ({
           ...current,
-          nome: sanitizeSingleLineInput(value, MAX_NAME_LENGTH),
+          nome: sanitizeSingleLineInput(value, MAX_NAME_LENGTH, { trim: false }),
         }));
 
         return;
@@ -1255,22 +1277,17 @@ export default function App() {
               py: { xs: 1.25, md: 1 },
               px: { xs: 2, sm: 3 },
               gap: { xs: 1.25, md: 2 },
-              flexWrap: { xs: 'wrap', md: 'nowrap' },
+              flexWrap: { xs: 'nowrap', md: 'nowrap' },
               alignItems: 'center',
             }}
           >
-            <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: 'left', width: { xs: '100%', md: 'auto' } }}>
+            <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: 'left' }}>
               <img src={logo} alt="NextStage Flow" style={{ height: '48px' }} />
             </Box>
             <Stack
               direction="row"
-              spacing={{ xs: 1, md: 4 }}
-              sx={{
-                order: { xs: 3, md: 2 },
-                width: { xs: '100%', md: 'auto' },
-                display: { xs: 'flex', md: 'flex' },
-                justifyContent: { xs: 'space-between', md: 'flex-start' },
-              }}
+              spacing={4}
+              sx={{ display: { xs: 'none', md: 'flex' } }}
             >
               <Button color="inherit" href="#sobre">
                 {content.nav.about}
@@ -1289,9 +1306,9 @@ export default function App() {
               value={language}
               onChange={handleLanguageChange}
               sx={{
-                order: { xs: 2, md: 3 },
-                minWidth: { xs: 'calc(50% - 6px)', sm: 190 },
-                maxWidth: { xs: 'calc(50% - 6px)', sm: 220 },
+                display: { xs: 'none', md: 'block' },
+                minWidth: 190,
+                maxWidth: 220,
                 '& .MuiInputBase-root': {
                   color: 'text.primary',
                   backgroundColor: 'rgba(15, 23, 42, 0.22)',
@@ -1345,13 +1362,11 @@ export default function App() {
             <Button
               variant="contained"
               sx={{
-                order: { xs: 2, md: 4 },
-                ml: { xs: 0, md: 2 },
-                display: 'inline-flex',
-                width: { xs: 'calc(50% - 6px)', sm: 'auto' },
-                px: { xs: 1.25, sm: 4 },
-                py: { xs: 1, sm: 1.5 },
-                fontSize: { xs: '0.8rem', sm: '1rem' },
+                ml: 2,
+                display: { xs: 'none', md: 'inline-flex' },
+                px: 4,
+                py: 1.5,
+                fontSize: '1rem',
                 whiteSpace: 'nowrap',
                 background: 'linear-gradient(to right, #f97316, #a855f7)',
                 '&:hover': {
@@ -1370,8 +1385,134 @@ export default function App() {
                 {content.hero.headerButtonMobile}
               </Box>
             </Button>
+            <IconButton
+              color="inherit"
+              onClick={openMobileMenu}
+              aria-label="Open navigation menu"
+              sx={{
+                display: { xs: 'inline-flex', md: 'none' },
+                border: '1px solid rgba(168, 85, 247, 0.3)',
+                backgroundColor: 'rgba(15, 23, 42, 0.32)',
+              }}
+            >
+              <Menu />
+            </IconButton>
           </Toolbar>
         </AppBar>
+
+        <Drawer
+          anchor="right"
+          open={isMobileMenuOpen}
+          onClose={closeMobileMenu}
+          PaperProps={{
+            sx: {
+              width: 'min(84vw, 320px)',
+              background:
+                'linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), rgba(88, 28, 135, 0.98))',
+              color: 'text.primary',
+              borderLeft: '1px solid rgba(168, 85, 247, 0.28)',
+            },
+          }}
+        >
+          <Box sx={{ p: 2.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box component="img" src={logo} alt="NextStage Flow" sx={{ height: 38, width: 'auto' }} />
+            <IconButton color="inherit" onClick={closeMobileMenu} aria-label="Close navigation menu">
+              <Close />
+            </IconButton>
+          </Box>
+          <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)' }} />
+          <List sx={{ px: 1.5, py: 1.5 }}>
+            <ListItemButton component="a" href="#sobre" onClick={closeMobileMenu} sx={{ borderRadius: 3 }}>
+              <ListItemText primary={content.nav.about} />
+            </ListItemButton>
+            <ListItemButton component="a" href="#servicos" onClick={closeMobileMenu} sx={{ borderRadius: 3 }}>
+              <ListItemText primary={content.nav.services} />
+            </ListItemButton>
+            <ListItemButton component="a" href="#contato" onClick={closeMobileMenu} sx={{ borderRadius: 3 }}>
+              <ListItemText primary={content.nav.contact} />
+            </ListItemButton>
+          </List>
+          <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.08)' }} />
+          <Box sx={{ p: 2.5 }}>
+            <TextField
+              select
+              fullWidth
+              size="small"
+              label={content.nav.language}
+              value={language}
+              onChange={handleLanguageChange}
+              sx={{
+                mb: 2.5,
+                '& .MuiInputBase-root': {
+                  color: 'text.primary',
+                  backgroundColor: 'rgba(15, 23, 42, 0.22)',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'rgba(255, 255, 255, 0.16)',
+                },
+                '& .MuiSvgIcon-root': {
+                  color: 'text.primary',
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'text.secondary',
+                },
+              }}
+              SelectProps={{
+                renderValue: (selected) => {
+                  const selectedOption = languageOptions.find(
+                    (option) => option.value === selected,
+                  );
+
+                  return selectedOption
+                    ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Box
+                            component="img"
+                            src={selectedOption.flagSrc}
+                            alt={selectedOption.label}
+                            sx={{ width: 18, height: 13, borderRadius: '2px', objectFit: 'cover' }}
+                          />
+                          <Box component="span">{selectedOption.label}</Box>
+                        </Box>
+                      )
+                    : selected;
+                },
+              }}
+            >
+              {languageOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box
+                      component="img"
+                      src={option.flagSrc}
+                      alt={option.label}
+                      sx={{ width: 18, height: 13, borderRadius: '2px', objectFit: 'cover' }}
+                    />
+                    <Box component="span">{option.label}</Box>
+                  </Box>
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              variant="contained"
+              fullWidth
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              onClick={closeMobileMenu}
+              sx={{
+                py: 1.4,
+                background: 'linear-gradient(to right, #f97316, #a855f7)',
+                '&:hover': {
+                  background: 'linear-gradient(to right, #ea580c, #9333ea)',
+                  boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)',
+                },
+              }}
+            >
+              {content.hero.headerButton}
+            </Button>
+          </Box>
+        </Drawer>
 
         <Box sx={{ pt: { xs: 24, sm: 20, md: 16 }, pb: { xs: 8, md: 10 } }}>
           <Container maxWidth="lg">
@@ -1863,19 +2004,55 @@ export default function App() {
           fullWidth
           maxWidth="sm"
           fullScreen={isMobile}
+          scroll="paper"
           PaperProps={{
             sx: {
               backgroundImage:
                 'linear-gradient(to bottom right, rgba(30, 27, 75, 0.98), rgba(88, 28, 135, 0.98))',
               border: '1px solid rgba(168, 85, 247, 0.35)',
-              borderRadius: 4,
+              borderRadius: { xs: 0, sm: 4 },
               m: { xs: 0, sm: 2 },
+              minHeight: { xs: '100dvh', sm: 'auto' },
+              maxHeight: { xs: '100dvh', sm: 'calc(100dvh - 32px)' },
+              display: 'flex',
             },
           }}
         >
-          <Box component="form" onSubmit={handleSubmit}>
-            <DialogTitle>{content.form.title}</DialogTitle>
-            <DialogContent sx={{ pt: '8px !important', px: { xs: 2, sm: 3 } }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              flex: 1,
+              minHeight: 0,
+            }}
+          >
+            <DialogTitle
+              sx={{
+                px: { xs: 2, sm: 3 },
+                pt: { xs: 2.25, sm: 3 },
+                pb: 1.5,
+                position: 'sticky',
+                top: 0,
+                zIndex: 1,
+                backgroundColor: 'rgba(66, 31, 115, 0.96)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              {content.form.title}
+            </DialogTitle>
+            <DialogContent
+              sx={{
+                pt: '8px !important',
+                px: { xs: 2, sm: 3 },
+                pb: 2,
+                flex: 1,
+                minHeight: 0,
+                overflowY: 'auto',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
               <Stack spacing={2.5}>
                 {!isEmailConfigured && (
                   <Alert severity="warning" sx={{ textAlign: 'left' }}>
@@ -2062,8 +2239,14 @@ export default function App() {
               sx={{
                 px: { xs: 2, sm: 3 },
                 pb: { xs: 2.5, sm: 3 },
+                pt: 1.5,
                 flexDirection: { xs: 'column-reverse', sm: 'row' },
                 gap: 1,
+                position: 'sticky',
+                bottom: 0,
+                backgroundColor: 'rgba(38, 20, 72, 0.96)',
+                backdropFilter: 'blur(10px)',
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
                 '& > *': { width: { xs: '100%', sm: 'auto' }, ml: '0 !important' },
               }}
             >
@@ -2108,20 +2291,44 @@ export default function App() {
           fullWidth
           maxWidth="md"
           fullScreen={isMobile}
+          scroll="paper"
           PaperProps={{
             sx: {
               backgroundImage:
                 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), rgba(30, 27, 75, 0.98))',
               border: '1px solid rgba(168, 85, 247, 0.28)',
-              borderRadius: 4,
+              borderRadius: { xs: 0, sm: 4 },
               m: { xs: 0, sm: 2 },
+              minHeight: { xs: '100dvh', sm: 'auto' },
+              maxHeight: { xs: '100dvh', sm: 'calc(100dvh - 32px)' },
+              display: 'flex',
             },
           }}
         >
-          <DialogTitle>{content.privacy.title}</DialogTitle>
+          <DialogTitle
+            sx={{
+              px: { xs: 2, sm: 3 },
+              pt: { xs: 2.25, sm: 3 },
+              pb: 1.5,
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              backgroundColor: 'rgba(18, 26, 56, 0.96)',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            {content.privacy.title}
+          </DialogTitle>
           <DialogContent
             dividers
-            sx={{ borderColor: 'rgba(148, 163, 184, 0.18)', px: { xs: 2, sm: 3 } }}
+            sx={{
+              borderColor: 'rgba(148, 163, 184, 0.18)',
+              px: { xs: 2, sm: 3 },
+              flex: 1,
+              minHeight: 0,
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
+            }}
           >
             <Stack spacing={2.5} sx={{ textAlign: 'left' }}>
               <Typography variant="body2" color="text.secondary">
@@ -2143,6 +2350,12 @@ export default function App() {
             sx={{
               px: { xs: 2, sm: 3 },
               pb: { xs: 2.5, sm: 3 },
+              pt: 1.5,
+              position: 'sticky',
+              bottom: 0,
+              backgroundColor: 'rgba(18, 26, 56, 0.96)',
+              backdropFilter: 'blur(10px)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
               '& > *': { width: { xs: '100%', sm: 'auto' }, ml: '0 !important' },
             }}
           >

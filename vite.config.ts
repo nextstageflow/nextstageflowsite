@@ -16,6 +16,35 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    chunkSizeWarningLimit: 700,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) {
+            return;
+          }
+
+          if (id.includes('/node_modules/@mui/') || id.includes('/node_modules/@emotion/')) {
+            return 'mui-vendor';
+          }
+
+          if (
+            id.includes('/node_modules/react-google-recaptcha/') ||
+            id.includes('/node_modules/libphonenumber-js/')
+          ) {
+            return 'form-vendor';
+          }
+
+          if (
+            id.includes('/node_modules/react/') ||
+            id.includes('/node_modules/react-dom/') ||
+            id.includes('/node_modules/scheduler/')
+          ) {
+            return 'react-vendor';
+          }
+        },
+      },
+    },
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
