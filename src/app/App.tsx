@@ -892,7 +892,6 @@ const sanitizeMessageInput = (value: string) =>
   value
     .replace(/[<>]/g, '')
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-    .trim()
     .slice(0, MAX_MESSAGE_LENGTH);
 
 const buildCountryOptions = (language: Language): CountryOption[] => {
@@ -948,7 +947,7 @@ const validateName = (name: string, content: (typeof translations)[Language]) =>
 };
 
 const validateMessage = (message: string, content: (typeof translations)[Language]) => {
-  if (!sanitizeMessageInput(message)) {
+  if (!sanitizeMessageInput(message).trim()) {
     return content.form.validation.messageRequired;
   }
 
@@ -1260,7 +1259,7 @@ export default function App() {
         whatsapp: `${selectedCountry.callingCode} ${formState.whatsapp}`
           .trim()
           .slice(0, MAX_WHATSAPP_LENGTH),
-        mensagem: sanitizeMessageInput(formState.mensagem),
+        mensagem: sanitizeMessageInput(formState.mensagem).trim(),
       };
 
       await emailjs.send(
