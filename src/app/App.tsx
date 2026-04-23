@@ -278,9 +278,9 @@ const translations = {
       privacy: 'PolÃ­tica de Privacidade e LGPD',
     },
     languageNames: {
-      pt: 'PortuguÃªs',
+      pt: 'Português',
       en: 'English',
-      es: 'EspaÃ±ol',
+      es: 'Español',
     },
     hero: {
       titleLine1: 'Automatize processos e',
@@ -658,9 +658,9 @@ const translations = {
       privacy: 'PolÃ­tica de Privacidad y LGPD',
     },
     languageNames: {
-      pt: 'PortuguÃ©s',
-      en: 'InglÃ©s',
-      es: 'EspaÃ±ol',
+      pt: 'Português',
+      en: 'Inglés',
+      es: 'Español',
     },
     hero: {
       titleLine1: 'Automatiza procesos y',
