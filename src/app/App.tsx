@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
+﻿import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import {
   AsYouType,
@@ -11,6 +11,9 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   Toolbar,
   Container,
@@ -56,6 +59,7 @@ import {
   WhatsApp,
   Menu,
   Close,
+  ExpandMore,
 } from '@mui/icons-material';
 import logo from '../imports/Logo_NextStage_Flow_Clean.png';
 import flagBr from '../imports/flags/flag-br.svg';
@@ -160,6 +164,7 @@ const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? '';
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? '';
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? '';
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? '';
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? '';
 
 const MAX_NAME_LENGTH = 120;
 const MAX_EMAIL_LENGTH = 254;
@@ -219,6 +224,21 @@ type LanguageOption = {
   flagSrc: string;
 };
 
+type SeoConfig = {
+  title: string;
+  description: string;
+  keywords: string;
+};
+
+type FaqConfig = {
+  title: string;
+  subtitle: string;
+  items: Array<{
+    question: string;
+    answer: string;
+  }>;
+};
+
 const initialFormState: ContactFormState = {
   nome: '',
   email: '',
@@ -252,123 +272,123 @@ const translations = {
   pt: {
     nav: {
       about: 'Sobre',
-      services: 'Serviços',
+      services: 'ServiÃ§os',
       contact: 'Contato',
       language: 'Idioma',
-      privacy: 'Política de Privacidade e LGPD',
+      privacy: 'PolÃ­tica de Privacidade e LGPD',
     },
     languageNames: {
-      pt: 'Português',
+      pt: 'PortuguÃªs',
       en: 'English',
-      es: 'Español',
+      es: 'EspaÃ±ol',
     },
     hero: {
       titleLine1: 'Automatize processos e',
       titleHighlight: 'elimine trabalho manual',
       body:
-        'Transformamos tarefas repetitivas em processos automatizados. Aumentamos a eficiência, reduzimos custos operacionais e liberamos sua equipe para focar no que realmente importa.',
+        'Unimos consultoria, agilidade e automacao para melhorar processos, aumentar produtividade e criar workflows personalizados, sites e apps que aceleram resultados reais no seu negocio.',
       primaryButton: 'Automatizar Processos',
-      secondaryButton: 'Ver Soluções',
-      headerButton: 'Iniciar Automação',
+      secondaryButton: 'Ver SoluÃ§Ãµes',
+      headerButton: 'Iniciar AutomaÃ§Ã£o',
       headerButtonMobile: 'Iniciar',
     },
     values: [
       {
-        title: 'Automatização Total',
+        title: 'AutomatizaÃ§Ã£o Total',
         description: 'Eliminamos tarefas manuais e processos repetitivos',
       },
       {
-        title: 'Máxima Eficiência',
+        title: 'MÃ¡xima EficiÃªncia',
         description: 'Reduzimos tempo, custos e erros operacionais',
       },
       {
         title: 'Ganho de Produtividade',
-        description: 'Sua equipe focada em atividades estratégicas',
+        description: 'Sua equipe focada em atividades estratÃ©gicas',
       },
     ],
     about: {
       title: 'Pare de Perder Tempo com Tarefas Manuais',
-      paragraph1Before: 'Nossa missão é ',
+      paragraph1Before: 'Nossa missÃ£o Ã© ',
       paragraph1Highlight: 'eliminar o trabalho manual repetitivo',
       paragraph1After:
-        ' que consome o tempo valioso da sua equipe. Implementamos automações inteligentes que transformam processos complexos em fluxos simples, rápidos e livres de erros.',
+        ' que consome o tempo valioso da sua equipe. Aplicamos consultoria com agilidade para transformar processos complexos em automacao, workflows personalizados e operacoes mais simples, rapidas e confiaveis.',
       paragraph2:
-        'Seja na entrada de dados, geração de relatórios, envio de comunicações, processamento de documentos ou integração entre sistemas, criamos soluções personalizadas que aumentam drasticamente a eficiência operacional e liberam sua equipe para focar em atividades estratégicas de alto valor.',
-      highlight: 'Menos trabalho manual. Mais resultados. Máxima eficiência.',
+        'Seja na entrada de dados, geracao de relatorios, envio de comunicacoes, processamento de documentos, criacao de site e apps ou integracao entre sistemas, entregamos personalizacao, melhoria de processos e solucoes sob medida para gerar produtividade e crescimento.',
+      highlight: 'Menos trabalho manual. Mais produtividade. Mais resultados.',
     },
     services: {
-      title: 'Como Automatizamos Seu Negócio',
-      subtitle: 'Soluções que eliminam processos manuais e multiplicam sua produtividade',
+      title: 'Como Automatizamos Seu NegÃ³cio',
+      subtitle: 'Consultoria, automacao, workflows personalizados, sites e apps para melhorar processos e multiplicar sua produtividade',
       items: [
         {
-          title: 'Automação Inteligente',
+          title: 'AutomaÃ§Ã£o Inteligente',
           description:
-            'Eliminamos tarefas manuais e repetitivas através de automações personalizadas que economizam tempo e reduzem erros.',
+            'Eliminamos tarefas manuais e repetitivas atravÃ©s de automaÃ§Ãµes personalizadas que economizam tempo e reduzem erros.',
         },
         {
-          title: 'Aumento de Eficiência',
+          title: 'Aumento de EficiÃªncia',
           description:
             'Otimizamos processos operacionais, administrativos e financeiros para maximizar produtividade e resultados.',
         },
         {
           title: 'Workflows Personalizados',
           description:
-            'Criamos sistemas e fluxos de trabalho sob medida que transformam operações complexas em processos simples e automatizados.',
+            'Criamos sistemas e fluxos de trabalho sob medida que transformam operaÃ§Ãµes complexas em processos simples e automatizados.',
         },
         {
-          title: 'Automação n8n',
+          title: 'AutomaÃ§Ã£o n8n',
           description:
-            'Implementamos automações com n8n, integrações entre ferramentas, atendimento ao cliente, CRM, formulários, planilhas e sistemas internos.',
+            'Implementamos automaÃ§Ãµes com n8n, integraÃ§Ãµes entre ferramentas, atendimento ao cliente, CRM, formulÃ¡rios, planilhas e sistemas internos.',
         },
         {
           title: 'Sites, Apps e Ferramentas',
           description:
-            'Desenvolvemos sites, aplicativos e ferramentas digitais para acelerar operações, validar ideias e remover gargalos manuais.',
+            'Desenvolvemos sites, aplicativos e ferramentas digitais para acelerar operaÃ§Ãµes, validar ideias e remover gargalos manuais.',
         },
         {
-          title: 'Consultoria Ágil',
+          title: 'Consultoria Ãgil',
           description:
-            'Apoiamos empresas com consultoria ágil, melhoria de processos, priorização de iniciativas e criação de soluções práticas para ganhar velocidade.',
+            'Apoiamos empresas com consultoria Ã¡gil, melhoria de processos, priorizaÃ§Ã£o de iniciativas e criaÃ§Ã£o de soluÃ§Ãµes prÃ¡ticas para ganhar velocidade.',
         },
       ],
       processesLead: 'Processos que automatizamos:',
       processes:
-        'Entrada e processamento de dados | Geração automática de relatórios | Integração entre sistemas | Gestão de documentos | Fluxos de aprovação | Comunicação automatizada | Tarefas administrativas e financeiras | Automação n8n | Criação de sites, apps e ferramentas | Atendimento ao cliente',
+        'Entrada e processamento de dados | Geracao automatica de relatorios | Integracao entre sistemas | Gestao de documentos | Fluxos de aprovacao | Comunicacao automatizada | Tarefas administrativas e financeiras | Workflows e workflows personalizados | Automacao n8n | Criacao de site e apps | Atendimento ao cliente',
     },
     contact: {
       title: 'Pronto para Automatizar?',
-      subtitle: 'Vamos identificar quais processos manuais podemos eliminar na sua empresa',
+      subtitle: 'Vamos identificar como consultoria, agilidade, automacao e melhoria de processos podem aumentar a produtividade da sua empresa',
       whatsapp: 'WhatsApp',
       email: 'E-mail',
       linkedin: 'LinkedIn',
       linkedinName: 'NextStage Flow',
     },
     footer: {
-      description: 'Consultoria em tecnologia e automação de processos',
+      description: 'Consultoria em tecnologia e automaÃ§Ã£o de processos',
       founded: 'Fundada em 2025 | NextStage Flow',
-      copyright: '© 2025 NextStage Flow. Todos os direitos reservados.',
+      copyright: 'Â© 2025 NextStage Flow. Todos os direitos reservados.',
     },
     form: {
       title: 'Envie sua mensagem',
       emailConfigWarning:
         'Para habilitar o envio, crie o arquivo `.env` na raiz do projeto e preencha `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` e `VITE_EMAILJS_PUBLIC_KEY` com os dados da sua conta EmailJS.',
       recaptchaWarning:
-        'Para ativar o Google reCAPTCHA, adicione `VITE_RECAPTCHA_SITE_KEY` no arquivo `.env` usando a site key do seu domínio.',
+        'Para ativar o Google reCAPTCHA, adicione `VITE_RECAPTCHA_SITE_KEY` no arquivo `.env` usando a site key do seu domÃ­nio.',
       nameLabel: 'Seu nome',
       emailLabel: 'Seu e-mail',
       emailPlaceholder: 'nome@empresa.com',
-      emailHelper: 'Sem espaços e em formato válido, como nome@empresa.com.',
+      emailHelper: 'Sem espaÃ§os e em formato vÃ¡lido, como nome@empresa.com.',
       websiteLabel: 'Website',
-      countryLabel: 'País / código',
-      countryPlaceholder: 'Pesquise o país',
+      countryLabel: 'PaÃ­s / cÃ³digo',
+      countryPlaceholder: 'Pesquise o paÃ­s',
       whatsappLabel: 'Seu WhatsApp',
       whatsappHelper:
-        'Pesquise o país ao lado; o código aparece aqui e a máscara é aplicada automaticamente.',
+        'Pesquise o paÃ­s ao lado; o cÃ³digo aparece aqui e a mÃ¡scara Ã© aplicada automaticamente.',
       messageLabel: 'Sua mensagem',
       privacyInfo:
-        'Usaremos seus dados apenas para responder seu contato, apresentar propostas e dar continuidade à conversa comercial, conforme nossa Política de Privacidade.',
+        'Usaremos seus dados apenas para responder seu contato, apresentar propostas e dar continuidade Ã  conversa comercial, conforme nossa PolÃ­tica de Privacidade.',
       consentBefore: 'Li e concordo com a ',
-      consentLink: 'Política de Privacidade e tratamento de dados pessoais',
+      consentLink: 'PolÃ­tica de Privacidade e tratamento de dados pessoais',
       consentAfter: ' para envio desta mensagem.',
       cancel: 'Cancelar',
       submit: 'Enviar e-mail',
@@ -376,47 +396,47 @@ const translations = {
       validation: {
         nameRequired: 'Informe seu nome.',
         emailRequired: 'Informe um e-mail.',
-        emailInvalid: 'Digite um e-mail válido.',
+        emailInvalid: 'Digite um e-mail vÃ¡lido.',
         whatsappRequired: 'Informe um WhatsApp.',
-        whatsappInvalidCode: 'Digite um número válido com código do país.',
-        whatsappInvalidCountry: 'Digite um número válido para o país selecionado.',
+        whatsappInvalidCode: 'Digite um nÃºmero vÃ¡lido com cÃ³digo do paÃ­s.',
+        whatsappInvalidCountry: 'Digite um nÃºmero vÃ¡lido para o paÃ­s selecionado.',
         messageRequired: 'Escreva sua mensagem.',
       },
     },
     privacy: {
-      title: 'Política de Privacidade e LGPD',
+      title: 'PolÃ­tica de Privacidade e LGPD',
       intro:
-        'Esta política explica como a NextStage Flow trata dados pessoais enviados pelo formulário de contato, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018).',
+        'Esta polÃ­tica explica como a NextStage Flow trata dados pessoais enviados pelo formulÃ¡rio de contato, em conformidade com a Lei Geral de ProteÃ§Ã£o de Dados Pessoais (Lei nÂº 13.709/2018).',
       sections: [
         {
           title: '1. Dados coletados',
           body:
-            'Podemos coletar nome, e-mail, telefone/WhatsApp, mensagem enviada e informações técnicas necessárias para segurança e prevenção de abuso, como validação por reCAPTCHA.',
+            'Podemos coletar nome, e-mail, telefone/WhatsApp, mensagem enviada e informaÃ§Ãµes tÃ©cnicas necessÃ¡rias para seguranÃ§a e prevenÃ§Ã£o de abuso, como validaÃ§Ã£o por reCAPTCHA.',
         },
         {
           title: '2. Finalidade do tratamento',
           body:
-            'Os dados são utilizados para responder seu contato, elaborar propostas, manter comunicação comercial relacionada ao seu pedido e proteger o formulário contra spam, fraude e uso automatizado indevido.',
+            'Os dados sÃ£o utilizados para responder seu contato, elaborar propostas, manter comunicaÃ§Ã£o comercial relacionada ao seu pedido e proteger o formulÃ¡rio contra spam, fraude e uso automatizado indevido.',
         },
         {
           title: '3. Base legal',
           body:
-            'O tratamento ocorre com base no seu consentimento ao enviar o formulário e, quando aplicável, em legítimo interesse para responder solicitações comerciais e adotar medidas de segurança.',
+            'O tratamento ocorre com base no seu consentimento ao enviar o formulÃ¡rio e, quando aplicÃ¡vel, em legÃ­timo interesse para responder solicitaÃ§Ãµes comerciais e adotar medidas de seguranÃ§a.',
         },
         {
           title: '4. Compartilhamento',
           body:
-            'Para operar o formulário, seus dados podem ser processados por provedores contratados pela NextStage Flow, como serviços de envio de e-mail e mecanismos de verificação anti-bot, sempre limitados à finalidade deste contato.',
+            'Para operar o formulÃ¡rio, seus dados podem ser processados por provedores contratados pela NextStage Flow, como serviÃ§os de envio de e-mail e mecanismos de verificaÃ§Ã£o anti-bot, sempre limitados Ã  finalidade deste contato.',
         },
         {
-          title: '5. Retenção',
+          title: '5. RetenÃ§Ã£o',
           body:
-            'Os dados serão mantidos pelo tempo necessário para atender sua solicitação, conduzir o relacionamento comercial e cumprir obrigações legais ou regulatórias, quando existirem.',
+            'Os dados serÃ£o mantidos pelo tempo necessÃ¡rio para atender sua solicitaÃ§Ã£o, conduzir o relacionamento comercial e cumprir obrigaÃ§Ãµes legais ou regulatÃ³rias, quando existirem.',
         },
         {
           title: '6. Seus direitos',
           body:
-            'Você pode solicitar confirmação do tratamento, acesso, correção, atualização, anonimização, eliminação, portabilidade ou revogação do consentimento, observadas as hipóteses legais aplicáveis.',
+            'VocÃª pode solicitar confirmaÃ§Ã£o do tratamento, acesso, correÃ§Ã£o, atualizaÃ§Ã£o, anonimizaÃ§Ã£o, eliminaÃ§Ã£o, portabilidade ou revogaÃ§Ã£o do consentimento, observadas as hipÃ³teses legais aplicÃ¡veis.',
         },
         {
           title: '7. Contato para privacidade',
@@ -431,13 +451,13 @@ const translations = {
       cooldown: 'Aguarde um minuto antes de enviar outra mensagem.',
       review: 'Revise os campos de e-mail e WhatsApp antes de enviar.',
       consent:
-        'Confirme a concordância com a Política de Privacidade e tratamento de dados para enviar.',
+        'Confirme a concordÃ¢ncia com a PolÃ­tica de Privacidade e tratamento de dados para enviar.',
       emailConfig: 'Configure as chaves do EmailJS no arquivo .env para habilitar o envio.',
       recaptchaConfig:
         'Configure a chave do Google reCAPTCHA no arquivo .env para habilitar o envio.',
       captcha: 'Confirme o reCAPTCHA antes de enviar a mensagem.',
       error:
-        'Não foi possível enviar o e-mail agora. Revise as credenciais do EmailJS e tente novamente.',
+        'NÃ£o foi possÃ­vel enviar o e-mail agora. Revise as credenciais do EmailJS e tente novamente.',
     },
   },
   en: {
@@ -482,7 +502,7 @@ const translations = {
       paragraph1Before: 'Our mission is to ',
       paragraph1Highlight: 'eliminate repetitive manual work',
       paragraph1After:
-        ' that consumes your team’s valuable time. We implement smart automations that turn complex processes into simple, fast, and error-free flows.',
+        ' that consumes your teamâ€™s valuable time. We implement smart automations that turn complex processes into simple, fast, and error-free flows.',
       paragraph2:
         'Whether it is data entry, report generation, communications, document processing, or system integration, we create tailored solutions that dramatically improve operational efficiency and free your team to focus on high-value strategic activities.',
       highlight: 'Less manual work. More results. Maximum efficiency.',
@@ -528,7 +548,7 @@ const translations = {
     },
     contact: {
       title: 'Ready to Automate?',
-      subtitle: 'Let’s identify which manual processes we can eliminate in your business',
+      subtitle: 'Letâ€™s identify which manual processes we can eliminate in your business',
       whatsapp: 'WhatsApp',
       email: 'Email',
       linkedin: 'LinkedIn',
@@ -537,7 +557,7 @@ const translations = {
     footer: {
       description: 'Technology and process automation consulting',
       founded: 'Founded in 2025 | NextStage Flow',
-      copyright: '© 2025 NextStage Flow. All rights reserved.',
+      copyright: 'Â© 2025 NextStage Flow. All rights reserved.',
     },
     form: {
       title: 'Send us a message',
@@ -635,12 +655,12 @@ const translations = {
       services: 'Servicios',
       contact: 'Contacto',
       language: 'Idioma',
-      privacy: 'Política de Privacidad y LGPD',
+      privacy: 'PolÃ­tica de Privacidad y LGPD',
     },
     languageNames: {
-      pt: 'Portugués',
-      en: 'Inglés',
-      es: 'Español',
+      pt: 'PortuguÃ©s',
+      en: 'InglÃ©s',
+      es: 'EspaÃ±ol',
     },
     hero: {
       titleLine1: 'Automatiza procesos y',
@@ -649,39 +669,39 @@ const translations = {
         'Transformamos tareas repetitivas en procesos automatizados. Aumentamos la eficiencia, reducimos costos operativos y liberamos a tu equipo para enfocarse en lo que realmente importa.',
       primaryButton: 'Automatizar Procesos',
       secondaryButton: 'Ver Soluciones',
-      headerButton: 'Iniciar Automatización',
+      headerButton: 'Iniciar AutomatizaciÃ³n',
       headerButtonMobile: 'Iniciar',
     },
     values: [
       {
-        title: 'Automatización Total',
+        title: 'AutomatizaciÃ³n Total',
         description: 'Eliminamos tareas manuales y procesos repetitivos',
       },
       {
-        title: 'Máxima Eficiencia',
+        title: 'MÃ¡xima Eficiencia',
         description: 'Reducimos tiempo, costos y errores operativos',
       },
       {
         title: 'Mayor Productividad',
-        description: 'Tu equipo enfocado en actividades estratégicas',
+        description: 'Tu equipo enfocado en actividades estratÃ©gicas',
       },
     ],
     about: {
       title: 'Deja de Perder Tiempo con Tareas Manuales',
-      paragraph1Before: 'Nuestra misión es ',
+      paragraph1Before: 'Nuestra misiÃ³n es ',
       paragraph1Highlight: 'eliminar el trabajo manual repetitivo',
       paragraph1After:
-        ' que consume el tiempo valioso de tu equipo. Implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rápidos y sin errores.',
+        ' que consume el tiempo valioso de tu equipo. Implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rÃ¡pidos y sin errores.',
       paragraph2:
-        'Ya sea en la entrada de datos, generación de informes, envío de comunicaciones, procesamiento de documentos o integración entre sistemas, creamos soluciones personalizadas que aumentan drásticamente la eficiencia operativa y liberan a tu equipo para enfocarse en actividades estratégicas de alto valor.',
-      highlight: 'Menos trabajo manual. Más resultados. Máxima eficiencia.',
+        'Ya sea en la entrada de datos, generaciÃ³n de informes, envÃ­o de comunicaciones, procesamiento de documentos o integraciÃ³n entre sistemas, creamos soluciones personalizadas que aumentan drÃ¡sticamente la eficiencia operativa y liberan a tu equipo para enfocarse en actividades estratÃ©gicas de alto valor.',
+      highlight: 'Menos trabajo manual. MÃ¡s resultados. MÃ¡xima eficiencia.',
     },
     services: {
-      title: 'Cómo Automatizamos Tu Negocio',
+      title: 'CÃ³mo Automatizamos Tu Negocio',
       subtitle: 'Soluciones que eliminan procesos manuales y multiplican tu productividad',
       items: [
         {
-          title: 'Automatización Inteligente',
+          title: 'AutomatizaciÃ³n Inteligente',
           description:
             'Eliminamos tareas manuales y repetitivas mediante automatizaciones personalizadas que ahorran tiempo y reducen errores.',
         },
@@ -696,9 +716,9 @@ const translations = {
             'Creamos sistemas y flujos de trabajo a medida que transforman operaciones complejas en procesos simples y automatizados.',
         },
         {
-          title: 'Automatización con n8n',
+          title: 'AutomatizaciÃ³n con n8n',
           description:
-            'Implementamos automatizaciones con n8n, integraciones entre herramientas, atención al cliente, CRM, formularios, hojas de cálculo y sistemas internos.',
+            'Implementamos automatizaciones con n8n, integraciones entre herramientas, atenciÃ³n al cliente, CRM, formularios, hojas de cÃ¡lculo y sistemas internos.',
         },
         {
           title: 'Sitios, Apps y Herramientas',
@@ -706,119 +726,224 @@ const translations = {
             'Desarrollamos sitios web, aplicaciones y herramientas digitales para acelerar operaciones, validar ideas y eliminar cuellos de botella manuales.',
         },
         {
-          title: 'Consultoría Ágil',
+          title: 'ConsultorÃ­a Ãgil',
           description:
-            'Apoyamos a empresas con consultoría ágil, mejora de procesos, priorización de iniciativas y creación de soluciones prácticas para ganar velocidad.',
+            'Apoyamos a empresas con consultorÃ­a Ã¡gil, mejora de procesos, priorizaciÃ³n de iniciativas y creaciÃ³n de soluciones prÃ¡cticas para ganar velocidad.',
         },
       ],
       processesLead: 'Procesos que automatizamos:',
       processes:
-        'Entrada y procesamiento de datos | Generación automática de informes | Integración entre sistemas | Gestión documental | Flujos de aprobación | Comunicación automatizada | Tareas administrativas y financieras | Automatización n8n | Creación de sitios, apps y herramientas | Atención al cliente',
+        'Entrada y procesamiento de datos | GeneraciÃ³n automÃ¡tica de informes | IntegraciÃ³n entre sistemas | GestiÃ³n documental | Flujos de aprobaciÃ³n | ComunicaciÃ³n automatizada | Tareas administrativas y financieras | AutomatizaciÃ³n n8n | CreaciÃ³n de sitios, apps y herramientas | AtenciÃ³n al cliente',
     },
     contact: {
-      title: '¿Listo para Automatizar?',
-      subtitle: 'Vamos a identificar qué procesos manuales podemos eliminar en tu empresa',
+      title: 'Â¿Listo para Automatizar?',
+      subtitle: 'Vamos a identificar quÃ© procesos manuales podemos eliminar en tu empresa',
       whatsapp: 'WhatsApp',
       email: 'Correo',
       linkedin: 'LinkedIn',
       linkedinName: 'NextStage Flow',
     },
     footer: {
-      description: 'Consultoría en tecnología y automatización de procesos',
+      description: 'ConsultorÃ­a en tecnologÃ­a y automatizaciÃ³n de procesos',
       founded: 'Fundada en 2025 | NextStage Flow',
-      copyright: '© 2025 NextStage Flow. Todos los derechos reservados.',
+      copyright: 'Â© 2025 NextStage Flow. Todos los derechos reservados.',
     },
     form: {
-      title: 'Envíanos tu mensaje',
+      title: 'EnvÃ­anos tu mensaje',
       emailConfigWarning:
-        'Para habilitar el envío, crea el archivo `.env` en la raíz del proyecto y completa `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` y `VITE_EMAILJS_PUBLIC_KEY` con los datos de tu cuenta de EmailJS.',
+        'Para habilitar el envÃ­o, crea el archivo `.env` en la raÃ­z del proyecto y completa `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` y `VITE_EMAILJS_PUBLIC_KEY` con los datos de tu cuenta de EmailJS.',
       recaptchaWarning:
         'Para activar Google reCAPTCHA, agrega `VITE_RECAPTCHA_SITE_KEY` en el archivo `.env` usando la site key de tu dominio.',
       nameLabel: 'Tu nombre',
       emailLabel: 'Tu correo',
       emailPlaceholder: 'nombre@empresa.com',
-      emailHelper: 'Sin espacios y en un formato válido, como nombre@empresa.com.',
+      emailHelper: 'Sin espacios y en un formato vÃ¡lido, como nombre@empresa.com.',
       websiteLabel: 'Sitio web',
-      countryLabel: 'País / código',
-      countryPlaceholder: 'Busca un país',
+      countryLabel: 'PaÃ­s / cÃ³digo',
+      countryPlaceholder: 'Busca un paÃ­s',
       whatsappLabel: 'Tu WhatsApp',
       whatsappHelper:
-        'Busca el país al lado; el código aparece aquí y el formato se aplica automáticamente.',
+        'Busca el paÃ­s al lado; el cÃ³digo aparece aquÃ­ y el formato se aplica automÃ¡ticamente.',
       messageLabel: 'Tu mensaje',
       privacyInfo:
-        'Usaremos tus datos solo para responder tu contacto, presentar propuestas y dar continuidad a la conversación comercial, conforme a nuestra Política de Privacidad.',
-      consentBefore: 'He leído y acepto la ',
-      consentLink: 'Política de Privacidad y tratamiento de datos personales',
+        'Usaremos tus datos solo para responder tu contacto, presentar propuestas y dar continuidad a la conversaciÃ³n comercial, conforme a nuestra PolÃ­tica de Privacidad.',
+      consentBefore: 'He leÃ­do y acepto la ',
+      consentLink: 'PolÃ­tica de Privacidad y tratamiento de datos personales',
       consentAfter: ' para enviar este mensaje.',
       cancel: 'Cancelar',
       submit: 'Enviar correo',
       sending: 'Enviando...',
       validation: {
         nameRequired: 'Ingresa tu nombre.',
-        emailRequired: 'Ingresa un correo electrónico.',
-        emailInvalid: 'Ingresa un correo electrónico válido.',
-        whatsappRequired: 'Ingresa un número de WhatsApp.',
-        whatsappInvalidCode: 'Ingresa un número válido con código de país.',
-        whatsappInvalidCountry: 'Ingresa un número válido para el país seleccionado.',
+        emailRequired: 'Ingresa un correo electrÃ³nico.',
+        emailInvalid: 'Ingresa un correo electrÃ³nico vÃ¡lido.',
+        whatsappRequired: 'Ingresa un nÃºmero de WhatsApp.',
+        whatsappInvalidCode: 'Ingresa un nÃºmero vÃ¡lido con cÃ³digo de paÃ­s.',
+        whatsappInvalidCountry: 'Ingresa un nÃºmero vÃ¡lido para el paÃ­s seleccionado.',
         messageRequired: 'Escribe tu mensaje.',
       },
     },
     privacy: {
-      title: 'Política de Privacidad y LGPD',
+      title: 'PolÃ­tica de Privacidad y LGPD',
       intro:
-        'Esta política explica cómo NextStage Flow trata los datos personales enviados a través del formulario de contacto, en conformidad con la Ley General de Protección de Datos Personales de Brasil (LGPD - Ley n.º 13.709/2018).',
+        'Esta polÃ­tica explica cÃ³mo NextStage Flow trata los datos personales enviados a travÃ©s del formulario de contacto, en conformidad con la Ley General de ProtecciÃ³n de Datos Personales de Brasil (LGPD - Ley n.Âº 13.709/2018).',
       sections: [
         {
           title: '1. Datos recopilados',
           body:
-            'Podemos recopilar nombre, correo electrónico, teléfono/WhatsApp, mensaje enviado e información técnica necesaria para seguridad y prevención de abuso, como la validación mediante reCAPTCHA.',
+            'Podemos recopilar nombre, correo electrÃ³nico, telÃ©fono/WhatsApp, mensaje enviado e informaciÃ³n tÃ©cnica necesaria para seguridad y prevenciÃ³n de abuso, como la validaciÃ³n mediante reCAPTCHA.',
         },
         {
           title: '2. Finalidad del tratamiento',
           body:
-            'Los datos se utilizan para responder tu contacto, elaborar propuestas, mantener comunicación comercial relacionada con tu solicitud y proteger el formulario contra spam, fraude y uso automatizado indebido.',
+            'Los datos se utilizan para responder tu contacto, elaborar propuestas, mantener comunicaciÃ³n comercial relacionada con tu solicitud y proteger el formulario contra spam, fraude y uso automatizado indebido.',
         },
         {
           title: '3. Base legal',
           body:
-            'El tratamiento se realiza con base en tu consentimiento al enviar el formulario y, cuando corresponda, en interés legítimo para responder solicitudes comerciales y adoptar medidas de seguridad.',
+            'El tratamiento se realiza con base en tu consentimiento al enviar el formulario y, cuando corresponda, en interÃ©s legÃ­timo para responder solicitudes comerciales y adoptar medidas de seguridad.',
         },
         {
-          title: '4. Compartición',
+          title: '4. ComparticiÃ³n',
           body:
-            'Para operar el formulario, tus datos pueden ser procesados por proveedores contratados por NextStage Flow, como servicios de envío de correo y mecanismos de verificación anti-bot, siempre limitados a la finalidad de este contacto.',
+            'Para operar el formulario, tus datos pueden ser procesados por proveedores contratados por NextStage Flow, como servicios de envÃ­o de correo y mecanismos de verificaciÃ³n anti-bot, siempre limitados a la finalidad de este contacto.',
         },
         {
-          title: '5. Conservación',
+          title: '5. ConservaciÃ³n',
           body:
-            'Los datos se conservarán durante el tiempo necesario para atender tu solicitud, gestionar la relación comercial y cumplir obligaciones legales o regulatorias cuando correspondan.',
+            'Los datos se conservarÃ¡n durante el tiempo necesario para atender tu solicitud, gestionar la relaciÃ³n comercial y cumplir obligaciones legales o regulatorias cuando correspondan.',
         },
         {
           title: '6. Tus derechos',
           body:
-            'Puedes solicitar confirmación del tratamiento, acceso, corrección, actualización, anonimización, eliminación, portabilidad o revocación del consentimiento, observando las hipótesis legales aplicables.',
+            'Puedes solicitar confirmaciÃ³n del tratamiento, acceso, correcciÃ³n, actualizaciÃ³n, anonimizaciÃ³n, eliminaciÃ³n, portabilidad o revocaciÃ³n del consentimiento, observando las hipÃ³tesis legales aplicables.',
         },
         {
           title: '7. Contacto de privacidad',
           body:
-            'Para asuntos relacionados con datos personales y privacidad, contáctanos en nextstageflow@gmail.com.',
+            'Para asuntos relacionados con datos personales y privacidad, contÃ¡ctanos en nextstageflow@gmail.com.',
         },
       ],
       close: 'Cerrar',
     },
     toasts: {
-      success: 'Mensaje enviado con éxito a NextStage Flow.',
+      success: 'Mensaje enviado con Ã©xito a NextStage Flow.',
       cooldown: 'Espera un minuto antes de enviar otro mensaje.',
       review: 'Revisa los campos de correo y WhatsApp antes de enviar.',
       consent:
-        'Confirma tu acuerdo con la Política de Privacidad y el tratamiento de datos antes de enviar.',
-      emailConfig: 'Configura las claves de EmailJS en el archivo .env para habilitar el envío.',
+        'Confirma tu acuerdo con la PolÃ­tica de Privacidad y el tratamiento de datos antes de enviar.',
+      emailConfig: 'Configura las claves de EmailJS en el archivo .env para habilitar el envÃ­o.',
       recaptchaConfig:
-        'Configura la clave de Google reCAPTCHA en el archivo .env para habilitar el envío.',
+        'Configura la clave de Google reCAPTCHA en el archivo .env para habilitar el envÃ­o.',
       captcha: 'Completa el reCAPTCHA antes de enviar el mensaje.',
       error:
         'No fue posible enviar el correo ahora. Revisa las credenciales de EmailJS y vuelve a intentarlo.',
     },
+  },
+};
+
+const seoContent: Record<Language, SeoConfig> = {
+  pt: {
+    title: 'NextStage Flow | Consultoria, Agilidade, Automacao e Criacao de Sites e Apps',
+    description:
+      'Consultoria com agilidade, automacao, melhoria de processos, workflows personalizados e criacao de sites e apps para aumentar produtividade e acelerar resultados.',
+    keywords:
+      'consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados',
+  },
+  en: {
+    title: 'NextStage Flow | Consulting, Agility, Automation, Websites and Apps',
+    description:
+      'Consulting, agility, automation, process improvement, custom workflows, and website and app development to increase productivity and business efficiency.',
+    keywords:
+      'consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows',
+  },
+  es: {
+    title: 'NextStage Flow | Consultoria, Agilidad, Automatizacion, Sitios y Apps',
+    description:
+      'Consultoria con agilidad, automatizacion, mejora de procesos, workflows personalizados y creacion de sitios y apps para aumentar productividad y eficiencia.',
+    keywords:
+      'consultoria, agilidad, automatizacion, mejora de procesos, procesos, productividad, creacion de sitios y apps, sitio, app, workflow, workflows, personalizacion, workflows personalizados',
+  },
+};
+
+const faqContent: Record<Language, FaqConfig> = {
+  pt: {
+    title: 'Perguntas frequentes',
+    subtitle: 'Respostas rapidas sobre automacao, n8n, sites, apps e consultoria.',
+    items: [
+      {
+        question: 'Que tipos de automacao e melhoria de processos voces fazem?',
+        answer:
+          'Fazemos automacao de processos, melhoria de processos, workflows e workflows personalizados com integracoes, CRM, planilhas, documentos, atendimento e tarefas operacionais repetitivas.',
+      },
+      {
+        question: 'Voces criam workflows personalizados e integracoes entre ferramentas?',
+        answer:
+          'Sim. Criamos workflows personalizados com personalizacao de acordo com sua operacao, integrando WhatsApp, formularios, CRM, planilhas, e-mails e sistemas internos.',
+      },
+      {
+        question: 'A NextStage Flow tambem faz criacao de site e apps?',
+        answer:
+          'Sim. Alem da consultoria e da automacao, fazemos criacao de site e apps, ferramentas sob medida e solucoes digitais para ganhar produtividade e acelerar resultados.',
+      },
+      {
+        question: 'Como funciona a consultoria agil?',
+        answer:
+          'Mapeamos processos, priorizamos oportunidades de ganho rapido, desenhamos a solucao e implementamos melhorias praticas com foco em velocidade, eficiencia e resultado de negocio.',
+      },
+    ],
+  },
+  en: {
+    title: 'Frequently asked questions',
+    subtitle: 'Quick answers about automation, n8n, websites, apps, and consulting.',
+    items: [
+      {
+        question: 'What kinds of automation and process improvement do you deliver?',
+        answer:
+          'We deliver automation, process improvement, workflows, and custom workflows across integrations, CRM, spreadsheets, documents, customer service, and repetitive operations.',
+      },
+      {
+        question: 'Do you build custom workflows and tool integrations?',
+        answer:
+          'Yes. We build custom workflows and tailored integrations connecting WhatsApp, forms, CRM, spreadsheets, email, and internal systems.',
+      },
+      {
+        question: 'Does NextStage Flow also create websites and apps?',
+        answer:
+          'Yes. In addition to consulting and automation, we create websites, apps, and tailored digital tools to improve productivity and support business growth.',
+      },
+      {
+        question: 'How does your agile consulting work?',
+        answer:
+          'We map processes, prioritize fast-win opportunities, design the solution, and implement practical improvements focused on speed, efficiency, and business results.',
+      },
+    ],
+  },
+  es: {
+    title: 'Preguntas frecuentes',
+    subtitle: 'Respuestas rapidas sobre automatizacion, n8n, sitios, apps y consultoria.',
+    items: [
+      {
+        question: 'Que tipo de automatizacion y mejora de procesos realizan?',
+        answer:
+          'Realizamos automatizacion, mejora de procesos, workflows y workflows personalizados con integraciones, CRM, hojas de calculo, documentos, atencion y tareas operativas repetitivas.',
+      },
+      {
+        question: 'Crean workflows personalizados e integraciones entre herramientas?',
+        answer:
+          'Si. Creamos workflows personalizados con personalizacion segun tu operacion, integrando WhatsApp, formularios, CRM, hojas de calculo, correo electronico y sistemas internos.',
+      },
+      {
+        question: 'NextStage Flow tambien hace creacion de sitios y apps?',
+        answer:
+          'Si. Ademas de la consultoria y la automatizacion, creamos sitios, apps y herramientas digitales a medida para aumentar productividad y acelerar resultados.',
+      },
+      {
+        question: 'Como funciona la consultoria agil?',
+        answer:
+          'Mapeamos procesos, priorizamos oportunidades de resultado rapido, diseniamos la solucion e implementamos mejoras practicas enfocadas en velocidad, eficiencia y resultados de negocio.',
+      },
+    ],
   },
 };
 
@@ -831,6 +956,74 @@ const serviceIcons = [
   <Computer sx={{ fontSize: 48 }} />,
   <ShowChart sx={{ fontSize: 48 }} />,
 ];
+
+const normalizedSiteUrl = SITE_URL.trim().replace(/\/+$/, '');
+
+const getBaseSiteUrl = () => {
+  if (/^https?:\/\//i.test(normalizedSiteUrl)) {
+    return normalizedSiteUrl;
+  }
+
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+
+  return '';
+};
+
+const buildAssetUrl = (path: string) => {
+  const baseSiteUrl = getBaseSiteUrl();
+  return baseSiteUrl ? `${baseSiteUrl}${path}` : path;
+};
+
+const upsertMetaTag = (attributeName: 'name' | 'property', key: string, value: string) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  let element = document.head.querySelector<HTMLMetaElement>(`meta[${attributeName}="${key}"]`);
+
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attributeName, key);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute('content', value);
+};
+
+const upsertLinkTag = (rel: string, href: string) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  let element = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+
+  if (!element) {
+    element = document.createElement('link');
+    element.setAttribute('rel', rel);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute('href', href);
+};
+
+const upsertStructuredData = (id: string, data: unknown) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  let element = document.head.querySelector<HTMLScriptElement>(`script#${id}`);
+
+  if (!element) {
+    element = document.createElement('script');
+    element.type = 'application/ld+json';
+    element.id = id;
+    document.head.appendChild(element);
+  }
+
+  element.textContent = JSON.stringify(data);
+};
 
 const detectBrowserLanguage = (): Language => {
   if (typeof navigator === 'undefined') {
@@ -1008,6 +1201,8 @@ export default function App() {
   });
 
   const content = translations[language];
+  const seo = seoContent[language];
+  const faq = faqContent[language];
   const countryOptions = buildCountryOptions(language);
   const selectedCountry = getCountryOptionByIso(formState.countryIso, countryOptions);
   const languageOptions: LanguageOption[] = (['pt', 'en', 'es'] as Language[]).map((option) => ({
@@ -1027,8 +1222,89 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = languageToLocale[language];
-    document.title = 'NextStage Flow';
-  }, [language]);
+    document.title = seo.title;
+
+    const currentPageUrl =
+      typeof window !== 'undefined' ? window.location.href.split('#')[0] : getBaseSiteUrl() || '/';
+    const imageUrl = buildAssetUrl('/og-image.png');
+    const baseSiteUrl = getBaseSiteUrl() || currentPageUrl;
+    const structuredData = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'NextStage Flow',
+        url: baseSiteUrl,
+        inLanguage: languageToLocale[language],
+        description: seo.description,
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'NextStage Flow',
+        url: baseSiteUrl,
+        logo: imageUrl,
+        image: imageUrl,
+        email: EMAIL_TO,
+        sameAs: [linkedinLink],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: 'NextStage Flow',
+        url: currentPageUrl,
+        image: imageUrl,
+        logo: imageUrl,
+        description: seo.description,
+        email: EMAIL_TO,
+        telephone: '+55-47-99290-2477',
+        areaServed: 'Brazil',
+        availableLanguage: ['Portuguese', 'English', 'Spanish'],
+        sameAs: [linkedinLink],
+        serviceType: content.services.items.map((service) => service.title),
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.items.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      },
+    ];
+
+    upsertMetaTag('name', 'description', seo.description);
+    upsertMetaTag('name', 'keywords', seo.keywords);
+    upsertMetaTag(
+      'name',
+      'robots',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    );
+    upsertMetaTag(
+      'name',
+      'googlebot',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    );
+    upsertMetaTag('property', 'og:title', seo.title);
+    upsertMetaTag('property', 'og:description', seo.description);
+    upsertMetaTag('property', 'og:type', 'website');
+    upsertMetaTag('property', 'og:site_name', 'NextStage Flow');
+    upsertMetaTag('property', 'og:locale', languageToLocale[language].replace('-', '_'));
+    upsertMetaTag('property', 'og:url', currentPageUrl);
+    upsertMetaTag('property', 'og:image', imageUrl);
+    upsertMetaTag('name', 'twitter:card', 'summary_large_image');
+    upsertMetaTag('name', 'twitter:title', seo.title);
+    upsertMetaTag('name', 'twitter:description', seo.description);
+    upsertMetaTag('name', 'twitter:image', imageUrl);
+    upsertMetaTag('name', 'twitter:image:alt', 'NextStage Flow');
+    upsertMetaTag('name', 'application-name', 'NextStage Flow');
+    upsertMetaTag('name', 'apple-mobile-web-app-title', 'NextStage Flow');
+    upsertLinkTag('canonical', currentPageUrl);
+    upsertStructuredData('nextstageflow-structured-data', structuredData);
+  }, [content.services.items, faq.items, language, linkedinLink, seo]);
 
   const showToast = (severity: ToastState['severity'], message: string) => {
     setToast({ open: true, severity, message });
@@ -1361,6 +1637,7 @@ export default function App() {
               label={content.nav.language}
               value={language}
               onChange={handleLanguageChange}
+              InputLabelProps={{ shrink: true }}
               sx={{
                 display: { xs: 'none', md: 'block' },
                 minWidth: 190,
@@ -1377,6 +1654,11 @@ export default function App() {
                 },
                 '& .MuiInputLabel-root': {
                   color: 'text.secondary',
+                },
+                '& .MuiInputLabel-shrink': {
+                  px: 0.75,
+                  backgroundColor: 'rgba(30, 27, 75, 0.95)',
+                  borderRadius: 1,
                 },
               }}
               SelectProps={{
@@ -1497,6 +1779,7 @@ export default function App() {
               label={content.nav.language}
               value={language}
               onChange={handleLanguageChange}
+              InputLabelProps={{ shrink: true }}
               sx={{
                 mb: 2.5,
                 '& .MuiInputBase-root': {
@@ -1511,6 +1794,11 @@ export default function App() {
                 },
                 '& .MuiInputLabel-root': {
                   color: 'text.secondary',
+                },
+                '& .MuiInputLabel-shrink': {
+                  px: 0.75,
+                  backgroundColor: 'rgba(30, 27, 75, 0.95)',
+                  borderRadius: 1,
                 },
               }}
               SelectProps={{
@@ -1570,11 +1858,13 @@ export default function App() {
           </Box>
         </Drawer>
 
+        <Box component="main">
         <Box sx={{ pt: { xs: 24, sm: 20, md: 16 }, pb: { xs: 8, md: 10 } }}>
           <Container maxWidth="lg">
             <Box sx={{ maxWidth: 'md', mx: 'auto', textAlign: 'center' }}>
               <Typography
                 variant="h1"
+                component="h1"
                 gutterBottom
                 sx={{
                   maxWidth: '100%',
@@ -1629,7 +1919,7 @@ export default function App() {
           </Container>
         </Box>
 
-        <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: 'rgba(30, 27, 75, 0.3)' }}>
+        <Box component="section" sx={{ py: { xs: 6, md: 8 }, backgroundColor: 'rgba(30, 27, 75, 0.3)' }}>
           <Container maxWidth="lg">
             <Box
               sx={{
@@ -1660,7 +1950,7 @@ export default function App() {
                     <Stack direction="column" spacing={2} alignItems="center">
                       <Box sx={{ color: 'secondary.main', mt: 0.5 }}>{valueIcons[index]}</Box>
                       <Box>
-                        <Typography variant="h5" gutterBottom>
+                        <Typography variant="h5" component="h2" gutterBottom>
                           {value.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -1675,10 +1965,10 @@ export default function App() {
           </Container>
         </Box>
 
-        <Box id="sobre" sx={{ py: { xs: 7, md: 10 } }}>
+        <Box component="section" id="sobre" aria-labelledby="about-heading" sx={{ py: { xs: 7, md: 10 } }}>
           <Container maxWidth="md">
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h2" gutterBottom sx={{ mb: 4 }}>
+              <Typography id="about-heading" variant="h2" component="h2" gutterBottom sx={{ mb: 4 }}>
                 {content.about.title}
               </Typography>
               <Typography variant="body1" color="text.secondary" paragraph>
@@ -1707,10 +1997,15 @@ export default function App() {
           </Container>
         </Box>
 
-        <Box id="servicos" sx={{ py: { xs: 7, md: 10 }, backgroundColor: 'rgba(30, 27, 75, 0.3)' }}>
+        <Box
+          component="section"
+          id="servicos"
+          aria-labelledby="services-heading"
+          sx={{ py: { xs: 7, md: 10 }, backgroundColor: 'rgba(30, 27, 75, 0.3)' }}
+        >
           <Container maxWidth="lg">
             <Box sx={{ textAlign: 'center', mb: 8 }}>
-              <Typography variant="h2" gutterBottom>
+              <Typography id="services-heading" variant="h2" component="h2" gutterBottom>
                 {content.services.title}
               </Typography>
               <Typography variant="h6" color="text.secondary">
@@ -1746,7 +2041,7 @@ export default function App() {
                   >
                     <CardContent>
                       <Box sx={{ color: 'secondary.main', mb: 2 }}>{serviceIcons[index]}</Box>
-                      <Typography variant="h5" gutterBottom>
+                      <Typography variant="h5" component="h3" gutterBottom>
                         {service.title}
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
@@ -1777,10 +2072,48 @@ export default function App() {
           </Container>
         </Box>
 
-        <Box id="contato" sx={{ py: { xs: 7, md: 10 } }}>
+        <Box component="section" id="faq" aria-labelledby="faq-heading" sx={{ py: { xs: 7, md: 10 } }}>
+          <Container maxWidth="md">
+            <Box sx={{ textAlign: 'center', mb: 5 }}>
+              <Typography id="faq-heading" variant="h2" component="h2" gutterBottom>
+                {faq.title}
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                {faq.subtitle}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'grid', gap: 2 }}>
+              {faq.items.map((item) => (
+                <Accordion
+                  key={item.question}
+                  disableGutters
+                  sx={{
+                    backgroundColor: 'rgba(15, 23, 42, 0.72)',
+                    border: '1px solid rgba(168, 85, 247, 0.22)',
+                    borderRadius: '16px !important',
+                    '&::before': { display: 'none' },
+                  }}
+                >
+                  <AccordionSummary expandIcon={<ExpandMore sx={{ color: 'text.secondary' }} />}>
+                    <Typography variant="h6" component="h3" sx={{ textAlign: 'left' }}>
+                      {item.question}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'left' }}>
+                      {item.answer}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </Box>
+          </Container>
+        </Box>
+
+        <Box component="section" id="contato" aria-labelledby="contact-heading" sx={{ py: { xs: 7, md: 10 } }}>
           <Container maxWidth="lg">
             <Box sx={{ textAlign: 'center', mb: 8 }}>
-              <Typography variant="h2" gutterBottom>
+              <Typography id="contact-heading" variant="h2" component="h2" gutterBottom>
                 {content.contact.title}
               </Typography>
               <Typography variant="h6" color="text.secondary">
@@ -1842,7 +2175,7 @@ export default function App() {
                     >
                       <WhatsApp sx={{ fontSize: 40 }} />
                     </Box>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" component="h3" gutterBottom>
                       {content.contact.whatsapp}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -1895,7 +2228,7 @@ export default function App() {
                     >
                       <Email sx={{ fontSize: 40 }} />
                     </Box>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" component="h3" gutterBottom>
                       {content.contact.email}
                     </Typography>
                     <Typography
@@ -1952,7 +2285,7 @@ export default function App() {
                     >
                       <LinkedIn sx={{ fontSize: 40 }} />
                     </Box>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" component="h3" gutterBottom>
                       {content.contact.linkedin}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -1963,6 +2296,7 @@ export default function App() {
               </Box>
             </Box>
           </Container>
+        </Box>
         </Box>
 
         <Box
