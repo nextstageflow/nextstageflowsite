@@ -283,7 +283,7 @@ const translations = {
       titleLine1: 'Automatize processos e',
       titleHighlight: 'elimine trabalho manual',
       body:
-        'Unimos consultoria, agilidade e automação para melhorar processos, aumentar produtividade e criar workflows personalizados, sites e apps que aceleram resultados reais no seu negócio.',
+        'A NextStage Flow une consultoria, agilidade e automação para melhorar processos, aumentar produtividade e criar workflows personalizados, sites e apps que aceleram resultados reais no seu negócio.',
       primaryButton: 'Automatizar Processos',
       secondaryButton: 'Ver Soluções',
       headerButton: 'Iniciar Automação',
@@ -308,7 +308,7 @@ const translations = {
       paragraph1Before: 'Nossa missão é ',
       paragraph1Highlight: 'eliminar o trabalho manual repetitivo',
       paragraph1After:
-        ' que consome o tempo valioso da sua equipe. Aplicamos consultoria com agilidade para transformar processos complexos em automação, workflows personalizados e operações mais simples, rápidas e confiáveis.',
+        ' que consome o tempo valioso da sua equipe. Na NextStage Flow, aplicamos consultoria com agilidade para transformar processos complexos em automação, workflows personalizados e operações mais simples, rápidas e confiáveis.',
       paragraph2:
         'Seja na entrada de dados, geração de relatórios, envio de comunicações, processamento de documentos, criação de site e apps ou integração entre sistemas, entregamos personalização, melhoria de processos e soluções sob medida para gerar produtividade e crescimento.',
       highlight: 'Menos trabalho manual. Mais produtividade. Mais resultados.',
@@ -477,7 +477,7 @@ const translations = {
       titleLine1: 'Automate processes and',
       titleHighlight: 'eliminate manual work',
       body:
-        'We combine consulting, agility, and automation to improve processes, increase productivity, and build custom workflows, websites, and apps that drive real business results.',
+        'NextStage Flow combines consulting, agility, and automation to improve processes, increase productivity, and build custom workflows, websites, and apps that drive real business results.',
       primaryButton: 'Automate Processes',
       secondaryButton: 'View Solutions',
       headerButton: 'Start Automation',
@@ -502,7 +502,7 @@ const translations = {
       paragraph1Before: 'Our mission is to ',
       paragraph1Highlight: 'eliminate repetitive manual work',
       paragraph1After:
-        " that consumes your team's valuable time. We implement smart automations that turn complex processes into simple, fast, and error-free flows.",
+        " that consumes your team's valuable time. At NextStage Flow, we implement smart automations that turn complex processes into simple, fast, and error-free flows.",
       paragraph2:
         'Whether it is data entry, report generation, communications, document processing, or system integration, we create tailored solutions that dramatically improve operational efficiency and free your team to focus on high-value strategic activities.',
       highlight: 'Less manual work. More results. Maximum efficiency.',
@@ -667,7 +667,7 @@ const translations = {
       titleLine1: 'Automatiza procesos y',
       titleHighlight: 'elimina el trabajo manual',
       body:
-        'Transformamos tareas repetitivas en procesos automatizados. Aumentamos la eficiencia, reducimos costos operativos y liberamos a tu equipo para enfocarse en lo que realmente importa.',
+        'NextStage Flow transforma tareas repetitivas en procesos automatizados. Aumentamos la eficiencia, reducimos costos operativos y liberamos a tu equipo para enfocarse en lo que realmente importa.',
       primaryButton: 'Automatizar Procesos',
       secondaryButton: 'Ver Soluciones',
       headerButton: 'Iniciar Automatización',
@@ -692,7 +692,7 @@ const translations = {
       paragraph1Before: 'Nuestra misión es ',
       paragraph1Highlight: 'eliminar el trabajo manual repetitivo',
       paragraph1After:
-        ' que consume el tiempo valioso de tu equipo. Implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rápidos y sin errores.',
+        ' que consume el tiempo valioso de tu equipo. En NextStage Flow implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rápidos y sin errores.',
       paragraph2:
         'Ya sea en la entrada de datos, generación de informes, envío de comunicaciones, procesamiento de documentos o integración entre sistemas, creamos soluciones personalizadas que aumentan drásticamente la eficiencia operativa y liberan a tu equipo para enfocarse en actividades estratégicas de alto valor.',
       highlight: 'Menos trabajo manual. Más resultados. Máxima eficiencia.',
@@ -845,25 +845,25 @@ const translations = {
 };
 const seoContent: Record<Language, SeoConfig> = {
   pt: {
-    title: 'NextStage Flow | Consultoria, Agilidade, Automacao e Criacao de Sites e Apps',
+    title: 'NextStage Flow | NextStage, Next Stage, Automacao, Consultoria e Apps',
     description:
-      'Consultoria com agilidade, automacao, melhoria de processos, workflows personalizados e criacao de sites e apps para aumentar produtividade e acelerar resultados.',
+      'NextStage Flow, NextStage e Next Stage: consultoria com agilidade, automacao, melhoria de processos, workflows personalizados e criacao de sites e apps para acelerar resultados.',
     keywords:
-      'consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados',
+      'nextstage, next stage, nextstage flow, nextstageflow, consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados',
   },
   en: {
-    title: 'NextStage Flow | Consulting, Agility, Automation, Websites and Apps',
+    title: 'NextStage Flow | NextStage, Next Stage, Consulting, Automation and Apps',
     description:
-      'Consulting, agility, automation, process improvement, custom workflows, and website and app development to increase productivity and business efficiency.',
+      'NextStage Flow, NextStage, and Next Stage deliver consulting, agility, automation, process improvement, custom workflows, and website and app development.',
     keywords:
-      'consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows',
+      'nextstage, next stage, nextstage flow, nextstageflow, consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows',
   },
   es: {
-    title: 'NextStage Flow | Consultoria, Agilidad, Automatizacion, Sitios y Apps',
+    title: 'NextStage Flow | NextStage, Next Stage, Consultoria, Automatizacion y Apps',
     description:
-      'Consultoria con agilidad, automatizacion, mejora de procesos, workflows personalizados y creacion de sitios y apps para aumentar productividad y eficiencia.',
+      'NextStage Flow, NextStage y Next Stage ofrecen consultoria con agilidad, automatizacion, mejora de procesos, workflows personalizados y creacion de sitios y apps.',
     keywords:
-      'consultoria, agilidad, automatizacion, mejora de procesos, procesos, productividad, creacion de sitios y apps, sitio, app, workflow, workflows, personalizacion, workflows personalizados',
+      'nextstage, next stage, nextstage flow, nextstageflow, consultoria, agilidad, automatizacion, mejora de procesos, procesos, productividad, creacion de sitios y apps, sitio, app, workflow, workflows, personalizacion, workflows personalizados',
   },
 };
 
@@ -1242,6 +1242,7 @@ export default function App() {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'NextStage Flow',
+        alternateName: ['NextStage', 'Next Stage', 'nextstageflow', 'next stage flow'],
         url: baseSiteUrl,
         logo: imageUrl,
         image: imageUrl,
@@ -1252,6 +1253,7 @@ export default function App() {
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
         name: 'NextStage Flow',
+        alternateName: ['NextStage', 'Next Stage', 'nextstageflow', 'next stage flow'],
         url: currentPageUrl,
         image: imageUrl,
         logo: imageUrl,
@@ -1596,7 +1598,11 @@ export default function App() {
             }}
           >
             <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: 'left' }}>
-              <img src={logo} alt="NextStage Flow" style={{ height: '48px' }} />
+              <img
+                src={logo}
+                alt="NextStage Flow"
+                style={{ height: '48px', borderRadius: '30px' }}
+              />
             </Box>
             <Stack
               direction="row"
@@ -2299,7 +2305,11 @@ export default function App() {
               }}
             >
               <Box sx={{ width: '100%', minWidth: 0, textAlign: 'center' }}>
-                <img src={logo} alt="NextStage Flow" style={{ height: '40px' }} />
+                <img
+                  src={logo}
+                  alt="NextStage Flow"
+                  style={{ height: '40px', borderRadius: '30px' }}
+                />
               </Box>
               <Box sx={{ width: '100%', minWidth: 0, textAlign: 'center' }}>
                 <Typography variant="body2" color="text.secondary">
