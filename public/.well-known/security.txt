@@ -1,0 +1,6 @@
+Contact: mailto:nextstageflow@gmail.com
+Contact: https://nextstageflow.com/#contato
+Expires: 2027-04-23T23:59:59.000Z
+Preferred-Languages: pt, en, es
+Canonical: https://nextstageflow.com/.well-known/security.txt
+Policy: https://nextstageflow.com/#privacidade

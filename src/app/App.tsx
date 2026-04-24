@@ -157,7 +157,6 @@ const theme = createTheme({
   },
 });
 
-const EMAIL_FROM = 'cesar.trabalho7@gmail.com';
 const EMAIL_TO = 'nextstageflow@gmail.com';
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? '';
@@ -193,7 +192,6 @@ type ContactFormState = {
   countryIso: string;
   whatsapp: string;
   mensagem: string;
-  website: string;
   lgpdConsent: boolean;
 };
 
@@ -245,7 +243,6 @@ const initialFormState: ContactFormState = {
   countryIso: 'BR',
   whatsapp: '',
   mensagem: '',
-  website: '',
   lgpdConsent: false,
 };
 
@@ -272,10 +269,10 @@ const translations = {
   pt: {
     nav: {
       about: 'Sobre',
-      services: 'ServiÃ§os',
+      services: 'Serviços',
       contact: 'Contato',
       language: 'Idioma',
-      privacy: 'PolÃ­tica de Privacidade e LGPD',
+      privacy: 'Política de Privacidade e LGPD',
     },
     languageNames: {
       pt: 'Português',
@@ -286,109 +283,112 @@ const translations = {
       titleLine1: 'Automatize processos e',
       titleHighlight: 'elimine trabalho manual',
       body:
-        'Unimos consultoria, agilidade e automacao para melhorar processos, aumentar produtividade e criar workflows personalizados, sites e apps que aceleram resultados reais no seu negocio.',
+        'Unimos consultoria, agilidade e automação para melhorar processos, aumentar produtividade e criar workflows personalizados, sites e apps que aceleram resultados reais no seu negócio.',
       primaryButton: 'Automatizar Processos',
-      secondaryButton: 'Ver SoluÃ§Ãµes',
-      headerButton: 'Iniciar AutomaÃ§Ã£o',
+      secondaryButton: 'Ver Soluções',
+      headerButton: 'Iniciar Automação',
       headerButtonMobile: 'Iniciar',
     },
     values: [
       {
-        title: 'AutomatizaÃ§Ã£o Total',
+        title: 'Automatização Total',
         description: 'Eliminamos tarefas manuais e processos repetitivos',
       },
       {
-        title: 'MÃ¡xima EficiÃªncia',
+        title: 'Máxima Eficiência',
         description: 'Reduzimos tempo, custos e erros operacionais',
       },
       {
         title: 'Ganho de Produtividade',
-        description: 'Sua equipe focada em atividades estratÃ©gicas',
+        description: 'Sua equipe focada em atividades estratégicas',
       },
     ],
     about: {
       title: 'Pare de Perder Tempo com Tarefas Manuais',
-      paragraph1Before: 'Nossa missÃ£o Ã© ',
+      paragraph1Before: 'Nossa missão é ',
       paragraph1Highlight: 'eliminar o trabalho manual repetitivo',
       paragraph1After:
-        ' que consome o tempo valioso da sua equipe. Aplicamos consultoria com agilidade para transformar processos complexos em automacao, workflows personalizados e operacoes mais simples, rapidas e confiaveis.',
+        ' que consome o tempo valioso da sua equipe. Aplicamos consultoria com agilidade para transformar processos complexos em automação, workflows personalizados e operações mais simples, rápidas e confiáveis.',
       paragraph2:
-        'Seja na entrada de dados, geracao de relatorios, envio de comunicacoes, processamento de documentos, criacao de site e apps ou integracao entre sistemas, entregamos personalizacao, melhoria de processos e solucoes sob medida para gerar produtividade e crescimento.',
+        'Seja na entrada de dados, geração de relatórios, envio de comunicações, processamento de documentos, criação de site e apps ou integração entre sistemas, entregamos personalização, melhoria de processos e soluções sob medida para gerar produtividade e crescimento.',
       highlight: 'Menos trabalho manual. Mais produtividade. Mais resultados.',
     },
     services: {
-      title: 'Como Automatizamos Seu NegÃ³cio',
-      subtitle: 'Consultoria, automacao, workflows personalizados, sites e apps para melhorar processos e multiplicar sua produtividade',
+      title: 'Como Automatizamos Seu Negócio',
+      subtitle:
+        'Consultoria, automação, workflows personalizados, sites e apps para melhorar processos e multiplicar sua produtividade',
       items: [
         {
-          title: 'AutomaÃ§Ã£o Inteligente',
+          title: 'Automação Inteligente',
           description:
-            'Eliminamos tarefas manuais e repetitivas atravÃ©s de automaÃ§Ãµes personalizadas que economizam tempo e reduzem erros.',
+            'Eliminamos tarefas manuais e repetitivas através de automações personalizadas que economizam tempo e reduzem erros.',
         },
         {
-          title: 'Aumento de EficiÃªncia',
+          title: 'Aumento de Eficiência',
           description:
             'Otimizamos processos operacionais, administrativos e financeiros para maximizar produtividade e resultados.',
         },
         {
           title: 'Workflows Personalizados',
           description:
-            'Criamos sistemas e fluxos de trabalho sob medida que transformam operaÃ§Ãµes complexas em processos simples e automatizados.',
+            'Criamos sistemas e fluxos de trabalho sob medida que transformam operações complexas em processos simples e automatizados.',
         },
         {
-          title: 'AutomaÃ§Ã£o n8n',
+          title: 'Automação n8n',
           description:
-            'Implementamos automaÃ§Ãµes com n8n, integraÃ§Ãµes entre ferramentas, atendimento ao cliente, CRM, formulÃ¡rios, planilhas e sistemas internos.',
+            'Implementamos automações com n8n, integrações entre ferramentas, atendimento ao cliente, CRM, formulários, planilhas e sistemas internos.',
         },
         {
           title: 'Sites, Apps e Ferramentas',
           description:
-            'Desenvolvemos sites, aplicativos e ferramentas digitais para acelerar operaÃ§Ãµes, validar ideias e remover gargalos manuais.',
+            'Desenvolvemos sites, aplicativos e ferramentas digitais para acelerar operações, validar ideias e remover gargalos manuais.',
         },
         {
-          title: 'Consultoria Ãgil',
+          title: 'Consultoria Ágil',
           description:
-            'Apoiamos empresas com consultoria Ã¡gil, melhoria de processos, priorizaÃ§Ã£o de iniciativas e criaÃ§Ã£o de soluÃ§Ãµes prÃ¡ticas para ganhar velocidade.',
+            'Apoiamos empresas com consultoria ágil, melhoria de processos, priorização de iniciativas e criação de soluções práticas para ganhar velocidade.',
         },
       ],
       processesLead: 'Processos que automatizamos:',
       processes:
-        'Entrada e processamento de dados | Geracao automatica de relatorios | Integracao entre sistemas | Gestao de documentos | Fluxos de aprovacao | Comunicacao automatizada | Tarefas administrativas e financeiras | Workflows e workflows personalizados | Automacao n8n | Criacao de site e apps | Atendimento ao cliente',
+        'Entrada e processamento de dados | Geração automática de relatórios | Integração entre sistemas | Gestão de documentos | Fluxos de aprovação | Comunicação automatizada | Tarefas administrativas e financeiras | Workflows e workflows personalizados | Automação n8n | Criação de site e apps | Atendimento ao cliente',
     },
     contact: {
       title: 'Pronto para Automatizar?',
-      subtitle: 'Vamos identificar como consultoria, agilidade, automacao e melhoria de processos podem aumentar a produtividade da sua empresa',
+      subtitle:
+        'Vamos identificar como consultoria, agilidade, automação e melhoria de processos podem aumentar a produtividade da sua empresa',
       whatsapp: 'WhatsApp',
       email: 'E-mail',
       linkedin: 'LinkedIn',
       linkedinName: 'NextStage Flow',
     },
     footer: {
-      description: 'Consultoria em tecnologia e automaÃ§Ã£o de processos',
+      description: 'Consultoria em tecnologia e automação de processos',
       founded: 'Fundada em 2025 | NextStage Flow',
-      copyright: 'Â© 2025 NextStage Flow. Todos os direitos reservados.',
+      copyright: '© 2025 NextStage Flow. Todos os direitos reservados.',
     },
     form: {
       title: 'Envie sua mensagem',
       emailConfigWarning:
         'Para habilitar o envio, crie o arquivo `.env` na raiz do projeto e preencha `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` e `VITE_EMAILJS_PUBLIC_KEY` com os dados da sua conta EmailJS.',
       recaptchaWarning:
-        'Para ativar o Google reCAPTCHA, adicione `VITE_RECAPTCHA_SITE_KEY` no arquivo `.env` usando a site key do seu domÃ­nio.',
+        'Para ativar o Google reCAPTCHA, adicione `VITE_RECAPTCHA_SITE_KEY` no arquivo `.env` usando a site key do seu domínio.',
       nameLabel: 'Seu nome',
       emailLabel: 'Seu e-mail',
       emailPlaceholder: 'nome@empresa.com',
-      emailHelper: 'Sem espaÃ§os e em formato vÃ¡lido, como nome@empresa.com.',
-      websiteLabel: 'Website',
-      countryLabel: 'PaÃ­s / cÃ³digo',
-      countryPlaceholder: 'Pesquise o paÃ­s',
+      emailHelper: 'Sem espaços e em formato válido, como nome@empresa.com.',
+      countryLabel: 'País / código',
+      countryPlaceholder: 'Pesquise o país',
       whatsappLabel: 'Seu WhatsApp',
       whatsappHelper:
-        'Pesquise o paÃ­s ao lado; o cÃ³digo aparece aqui e a mÃ¡scara Ã© aplicada automaticamente.',
+        'Pesquise o país ao lado; o código aparece aqui e a máscara é aplicada automaticamente.',
       messageLabel: 'Sua mensagem',
       privacyInfo:
-        'Usaremos seus dados apenas para responder seu contato, apresentar propostas e dar continuidade Ã  conversa comercial, conforme nossa PolÃ­tica de Privacidade.',
+        'Usaremos seus dados apenas para responder seu contato, apresentar propostas e dar continuidade à conversa comercial, conforme nossa Política de Privacidade.',
+      securityInfo:
+        'Este site não solicita pagamentos, downloads, senhas, códigos de verificação ou dados bancários. O formulário serve apenas para contato comercial com a NextStage Flow.',
       consentBefore: 'Li e concordo com a ',
-      consentLink: 'PolÃ­tica de Privacidade e tratamento de dados pessoais',
+      consentLink: 'Política de Privacidade e tratamento de dados pessoais',
       consentAfter: ' para envio desta mensagem.',
       cancel: 'Cancelar',
       submit: 'Enviar e-mail',
@@ -396,47 +396,47 @@ const translations = {
       validation: {
         nameRequired: 'Informe seu nome.',
         emailRequired: 'Informe um e-mail.',
-        emailInvalid: 'Digite um e-mail vÃ¡lido.',
+        emailInvalid: 'Digite um e-mail válido.',
         whatsappRequired: 'Informe um WhatsApp.',
-        whatsappInvalidCode: 'Digite um nÃºmero vÃ¡lido com cÃ³digo do paÃ­s.',
-        whatsappInvalidCountry: 'Digite um nÃºmero vÃ¡lido para o paÃ­s selecionado.',
+        whatsappInvalidCode: 'Digite um número válido com código do país.',
+        whatsappInvalidCountry: 'Digite um número válido para o país selecionado.',
         messageRequired: 'Escreva sua mensagem.',
       },
     },
     privacy: {
-      title: 'PolÃ­tica de Privacidade e LGPD',
+      title: 'Política de Privacidade e LGPD',
       intro:
-        'Esta polÃ­tica explica como a NextStage Flow trata dados pessoais enviados pelo formulÃ¡rio de contato, em conformidade com a Lei Geral de ProteÃ§Ã£o de Dados Pessoais (Lei nÂº 13.709/2018).',
+        'Esta política explica como a NextStage Flow trata dados pessoais enviados pelo formulário de contato, em conformidade com a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018).',
       sections: [
         {
           title: '1. Dados coletados',
           body:
-            'Podemos coletar nome, e-mail, telefone/WhatsApp, mensagem enviada e informaÃ§Ãµes tÃ©cnicas necessÃ¡rias para seguranÃ§a e prevenÃ§Ã£o de abuso, como validaÃ§Ã£o por reCAPTCHA.',
+            'Podemos coletar nome, e-mail, telefone/WhatsApp, mensagem enviada e informações técnicas necessárias para segurança e prevenção de abuso, como validação por reCAPTCHA.',
         },
         {
           title: '2. Finalidade do tratamento',
           body:
-            'Os dados sÃ£o utilizados para responder seu contato, elaborar propostas, manter comunicaÃ§Ã£o comercial relacionada ao seu pedido e proteger o formulÃ¡rio contra spam, fraude e uso automatizado indevido.',
+            'Os dados são utilizados para responder seu contato, elaborar propostas, manter comunicação comercial relacionada ao seu pedido e proteger o formulário contra spam, fraude e uso automatizado indevido.',
         },
         {
           title: '3. Base legal',
           body:
-            'O tratamento ocorre com base no seu consentimento ao enviar o formulÃ¡rio e, quando aplicÃ¡vel, em legÃ­timo interesse para responder solicitaÃ§Ãµes comerciais e adotar medidas de seguranÃ§a.',
+            'O tratamento ocorre com base no seu consentimento ao enviar o formulário e, quando aplicável, em legítimo interesse para responder solicitações comerciais e adotar medidas de segurança.',
         },
         {
           title: '4. Compartilhamento',
           body:
-            'Para operar o formulÃ¡rio, seus dados podem ser processados por provedores contratados pela NextStage Flow, como serviÃ§os de envio de e-mail e mecanismos de verificaÃ§Ã£o anti-bot, sempre limitados Ã  finalidade deste contato.',
+            'Para operar o formulário, seus dados podem ser processados por provedores contratados pela NextStage Flow, como serviços de envio de e-mail e mecanismos de verificação anti-bot, sempre limitados à finalidade deste contato.',
         },
         {
-          title: '5. RetenÃ§Ã£o',
+          title: '5. Retenção',
           body:
-            'Os dados serÃ£o mantidos pelo tempo necessÃ¡rio para atender sua solicitaÃ§Ã£o, conduzir o relacionamento comercial e cumprir obrigaÃ§Ãµes legais ou regulatÃ³rias, quando existirem.',
+            'Os dados serão mantidos pelo tempo necessário para atender sua solicitação, conduzir o relacionamento comercial e cumprir obrigações legais ou regulatórias, quando existirem.',
         },
         {
           title: '6. Seus direitos',
           body:
-            'VocÃª pode solicitar confirmaÃ§Ã£o do tratamento, acesso, correÃ§Ã£o, atualizaÃ§Ã£o, anonimizaÃ§Ã£o, eliminaÃ§Ã£o, portabilidade ou revogaÃ§Ã£o do consentimento, observadas as hipÃ³teses legais aplicÃ¡veis.',
+            'Você pode solicitar confirmação do tratamento, acesso, correção, atualização, anonimização, eliminação, portabilidade ou revogação do consentimento, observadas as hipóteses legais aplicáveis.',
         },
         {
           title: '7. Contato para privacidade',
@@ -451,13 +451,13 @@ const translations = {
       cooldown: 'Aguarde um minuto antes de enviar outra mensagem.',
       review: 'Revise os campos de e-mail e WhatsApp antes de enviar.',
       consent:
-        'Confirme a concordÃ¢ncia com a PolÃ­tica de Privacidade e tratamento de dados para enviar.',
+        'Confirme a concordância com a Política de Privacidade e tratamento de dados para enviar.',
       emailConfig: 'Configure as chaves do EmailJS no arquivo .env para habilitar o envio.',
       recaptchaConfig:
         'Configure a chave do Google reCAPTCHA no arquivo .env para habilitar o envio.',
       captcha: 'Confirme o reCAPTCHA antes de enviar a mensagem.',
       error:
-        'NÃ£o foi possÃ­vel enviar o e-mail agora. Revise as credenciais do EmailJS e tente novamente.',
+        'Não foi possível enviar o e-mail agora. Revise as credenciais do EmailJS e tente novamente.',
     },
   },
   en: {
@@ -477,7 +477,7 @@ const translations = {
       titleLine1: 'Automate processes and',
       titleHighlight: 'eliminate manual work',
       body:
-        'We turn repetitive tasks into automated processes. We increase efficiency, reduce operational costs, and free your team to focus on what truly matters.',
+        'We combine consulting, agility, and automation to improve processes, increase productivity, and build custom workflows, websites, and apps that drive real business results.',
       primaryButton: 'Automate Processes',
       secondaryButton: 'View Solutions',
       headerButton: 'Start Automation',
@@ -502,7 +502,7 @@ const translations = {
       paragraph1Before: 'Our mission is to ',
       paragraph1Highlight: 'eliminate repetitive manual work',
       paragraph1After:
-        ' that consumes your teamâ€™s valuable time. We implement smart automations that turn complex processes into simple, fast, and error-free flows.',
+        " that consumes your team's valuable time. We implement smart automations that turn complex processes into simple, fast, and error-free flows.",
       paragraph2:
         'Whether it is data entry, report generation, communications, document processing, or system integration, we create tailored solutions that dramatically improve operational efficiency and free your team to focus on high-value strategic activities.',
       highlight: 'Less manual work. More results. Maximum efficiency.',
@@ -548,7 +548,7 @@ const translations = {
     },
     contact: {
       title: 'Ready to Automate?',
-      subtitle: 'Letâ€™s identify which manual processes we can eliminate in your business',
+      subtitle: "Let's identify which manual processes we can eliminate in your business",
       whatsapp: 'WhatsApp',
       email: 'Email',
       linkedin: 'LinkedIn',
@@ -557,7 +557,7 @@ const translations = {
     footer: {
       description: 'Technology and process automation consulting',
       founded: 'Founded in 2025 | NextStage Flow',
-      copyright: 'Â© 2025 NextStage Flow. All rights reserved.',
+      copyright: '© 2025 NextStage Flow. All rights reserved.',
     },
     form: {
       title: 'Send us a message',
@@ -569,7 +569,6 @@ const translations = {
       emailLabel: 'Your email',
       emailPlaceholder: 'name@company.com',
       emailHelper: 'No spaces and in a valid format, such as name@company.com.',
-      websiteLabel: 'Website',
       countryLabel: 'Country / code',
       countryPlaceholder: 'Search for a country',
       whatsappLabel: 'Your WhatsApp',
@@ -578,6 +577,8 @@ const translations = {
       messageLabel: 'Your message',
       privacyInfo:
         'We will use your data only to respond to your inquiry, present proposals, and continue the commercial conversation according to our Privacy Policy.',
+      securityInfo:
+        'This site does not request payments, downloads, passwords, verification codes, or banking details. This form is only for business contact with NextStage Flow.',
       consentBefore: 'I have read and agree to the ',
       consentLink: 'Privacy Policy and personal data processing',
       consentAfter: ' for sending this message.',
@@ -655,7 +656,7 @@ const translations = {
       services: 'Servicios',
       contact: 'Contacto',
       language: 'Idioma',
-      privacy: 'PolÃ­tica de Privacidad y LGPD',
+      privacy: 'Política de Privacidad y LGPD',
     },
     languageNames: {
       pt: 'Português',
@@ -669,39 +670,39 @@ const translations = {
         'Transformamos tareas repetitivas en procesos automatizados. Aumentamos la eficiencia, reducimos costos operativos y liberamos a tu equipo para enfocarse en lo que realmente importa.',
       primaryButton: 'Automatizar Procesos',
       secondaryButton: 'Ver Soluciones',
-      headerButton: 'Iniciar AutomatizaciÃ³n',
+      headerButton: 'Iniciar Automatización',
       headerButtonMobile: 'Iniciar',
     },
     values: [
       {
-        title: 'AutomatizaciÃ³n Total',
+        title: 'Automatización Total',
         description: 'Eliminamos tareas manuales y procesos repetitivos',
       },
       {
-        title: 'MÃ¡xima Eficiencia',
+        title: 'Máxima Eficiencia',
         description: 'Reducimos tiempo, costos y errores operativos',
       },
       {
         title: 'Mayor Productividad',
-        description: 'Tu equipo enfocado en actividades estratÃ©gicas',
+        description: 'Tu equipo enfocado en actividades estratégicas',
       },
     ],
     about: {
       title: 'Deja de Perder Tiempo con Tareas Manuales',
-      paragraph1Before: 'Nuestra misiÃ³n es ',
+      paragraph1Before: 'Nuestra misión es ',
       paragraph1Highlight: 'eliminar el trabajo manual repetitivo',
       paragraph1After:
-        ' que consume el tiempo valioso de tu equipo. Implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rÃ¡pidos y sin errores.',
+        ' que consume el tiempo valioso de tu equipo. Implementamos automatizaciones inteligentes que convierten procesos complejos en flujos simples, rápidos y sin errores.',
       paragraph2:
-        'Ya sea en la entrada de datos, generaciÃ³n de informes, envÃ­o de comunicaciones, procesamiento de documentos o integraciÃ³n entre sistemas, creamos soluciones personalizadas que aumentan drÃ¡sticamente la eficiencia operativa y liberan a tu equipo para enfocarse en actividades estratÃ©gicas de alto valor.',
-      highlight: 'Menos trabajo manual. MÃ¡s resultados. MÃ¡xima eficiencia.',
+        'Ya sea en la entrada de datos, generación de informes, envío de comunicaciones, procesamiento de documentos o integración entre sistemas, creamos soluciones personalizadas que aumentan drásticamente la eficiencia operativa y liberan a tu equipo para enfocarse en actividades estratégicas de alto valor.',
+      highlight: 'Menos trabajo manual. Más resultados. Máxima eficiencia.',
     },
     services: {
-      title: 'CÃ³mo Automatizamos Tu Negocio',
+      title: 'Cómo Automatizamos Tu Negocio',
       subtitle: 'Soluciones que eliminan procesos manuales y multiplican tu productividad',
       items: [
         {
-          title: 'AutomatizaciÃ³n Inteligente',
+          title: 'Automatización Inteligente',
           description:
             'Eliminamos tareas manuales y repetitivas mediante automatizaciones personalizadas que ahorran tiempo y reducen errores.',
         },
@@ -716,9 +717,9 @@ const translations = {
             'Creamos sistemas y flujos de trabajo a medida que transforman operaciones complejas en procesos simples y automatizados.',
         },
         {
-          title: 'AutomatizaciÃ³n con n8n',
+          title: 'Automatización con n8n',
           description:
-            'Implementamos automatizaciones con n8n, integraciones entre herramientas, atenciÃ³n al cliente, CRM, formularios, hojas de cÃ¡lculo y sistemas internos.',
+            'Implementamos automatizaciones con n8n, integraciones entre herramientas, atención al cliente, CRM, formularios, hojas de cálculo y sistemas internos.',
         },
         {
           title: 'Sitios, Apps y Herramientas',
@@ -726,122 +727,122 @@ const translations = {
             'Desarrollamos sitios web, aplicaciones y herramientas digitales para acelerar operaciones, validar ideas y eliminar cuellos de botella manuales.',
         },
         {
-          title: 'ConsultorÃ­a Ãgil',
+          title: 'Consultoría Ágil',
           description:
-            'Apoyamos a empresas con consultorÃ­a Ã¡gil, mejora de procesos, priorizaciÃ³n de iniciativas y creaciÃ³n de soluciones prÃ¡cticas para ganar velocidad.',
+            'Apoyamos a empresas con consultoría ágil, mejora de procesos, priorización de iniciativas y creación de soluciones prácticas para ganar velocidad.',
         },
       ],
       processesLead: 'Procesos que automatizamos:',
       processes:
-        'Entrada y procesamiento de datos | GeneraciÃ³n automÃ¡tica de informes | IntegraciÃ³n entre sistemas | GestiÃ³n documental | Flujos de aprobaciÃ³n | ComunicaciÃ³n automatizada | Tareas administrativas y financieras | AutomatizaciÃ³n n8n | CreaciÃ³n de sitios, apps y herramientas | AtenciÃ³n al cliente',
+        'Entrada y procesamiento de datos | Generación automática de informes | Integración entre sistemas | Gestión documental | Flujos de aprobación | Comunicación automatizada | Tareas administrativas y financieras | Automatización n8n | Creación de sitios, apps y herramientas | Atención al cliente',
     },
     contact: {
-      title: 'Â¿Listo para Automatizar?',
-      subtitle: 'Vamos a identificar quÃ© procesos manuales podemos eliminar en tu empresa',
+      title: '¿Listo para Automatizar?',
+      subtitle: 'Vamos a identificar qué procesos manuales podemos eliminar en tu empresa',
       whatsapp: 'WhatsApp',
       email: 'Correo',
       linkedin: 'LinkedIn',
       linkedinName: 'NextStage Flow',
     },
     footer: {
-      description: 'ConsultorÃ­a en tecnologÃ­a y automatizaciÃ³n de procesos',
+      description: 'Consultoría en tecnología y automatización de procesos',
       founded: 'Fundada en 2025 | NextStage Flow',
-      copyright: 'Â© 2025 NextStage Flow. Todos los derechos reservados.',
+      copyright: '© 2025 NextStage Flow. Todos los derechos reservados.',
     },
     form: {
-      title: 'EnvÃ­anos tu mensaje',
+      title: 'Envíanos tu mensaje',
       emailConfigWarning:
-        'Para habilitar el envÃ­o, crea el archivo `.env` en la raÃ­z del proyecto y completa `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` y `VITE_EMAILJS_PUBLIC_KEY` con los datos de tu cuenta de EmailJS.',
+        'Para habilitar el envío, crea el archivo `.env` en la raíz del proyecto y completa `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` y `VITE_EMAILJS_PUBLIC_KEY` con los datos de tu cuenta de EmailJS.',
       recaptchaWarning:
         'Para activar Google reCAPTCHA, agrega `VITE_RECAPTCHA_SITE_KEY` en el archivo `.env` usando la site key de tu dominio.',
       nameLabel: 'Tu nombre',
       emailLabel: 'Tu correo',
       emailPlaceholder: 'nombre@empresa.com',
-      emailHelper: 'Sin espacios y en un formato vÃ¡lido, como nombre@empresa.com.',
-      websiteLabel: 'Sitio web',
-      countryLabel: 'PaÃ­s / cÃ³digo',
-      countryPlaceholder: 'Busca un paÃ­s',
+      emailHelper: 'Sin espacios y en un formato válido, como nombre@empresa.com.',
+      countryLabel: 'País / código',
+      countryPlaceholder: 'Busca un país',
       whatsappLabel: 'Tu WhatsApp',
       whatsappHelper:
-        'Busca el paÃ­s al lado; el cÃ³digo aparece aquÃ­ y el formato se aplica automÃ¡ticamente.',
+        'Busca el país al lado; el código aparece aquí y el formato se aplica automáticamente.',
       messageLabel: 'Tu mensaje',
       privacyInfo:
-        'Usaremos tus datos solo para responder tu contacto, presentar propuestas y dar continuidad a la conversaciÃ³n comercial, conforme a nuestra PolÃ­tica de Privacidad.',
-      consentBefore: 'He leÃ­do y acepto la ',
-      consentLink: 'PolÃ­tica de Privacidad y tratamiento de datos personales',
+        'Usaremos tus datos solo para responder tu contacto, presentar propuestas y dar continuidad a la conversación comercial, conforme a nuestra Política de Privacidad.',
+      securityInfo:
+        'Este sitio no solicita pagos, descargas, contraseñas, códigos de verificación ni datos bancarios. Este formulario es solo para contacto comercial con NextStage Flow.',
+      consentBefore: 'He leído y acepto la ',
+      consentLink: 'Política de Privacidad y tratamiento de datos personales',
       consentAfter: ' para enviar este mensaje.',
       cancel: 'Cancelar',
       submit: 'Enviar correo',
       sending: 'Enviando...',
       validation: {
         nameRequired: 'Ingresa tu nombre.',
-        emailRequired: 'Ingresa un correo electrÃ³nico.',
-        emailInvalid: 'Ingresa un correo electrÃ³nico vÃ¡lido.',
-        whatsappRequired: 'Ingresa un nÃºmero de WhatsApp.',
-        whatsappInvalidCode: 'Ingresa un nÃºmero vÃ¡lido con cÃ³digo de paÃ­s.',
-        whatsappInvalidCountry: 'Ingresa un nÃºmero vÃ¡lido para el paÃ­s seleccionado.',
+        emailRequired: 'Ingresa un correo electrónico.',
+        emailInvalid: 'Ingresa un correo electrónico válido.',
+        whatsappRequired: 'Ingresa un número de WhatsApp.',
+        whatsappInvalidCode: 'Ingresa un número válido con código de país.',
+        whatsappInvalidCountry: 'Ingresa un número válido para el país seleccionado.',
         messageRequired: 'Escribe tu mensaje.',
       },
     },
     privacy: {
-      title: 'PolÃ­tica de Privacidad y LGPD',
+      title: 'Política de Privacidad y LGPD',
       intro:
-        'Esta polÃ­tica explica cÃ³mo NextStage Flow trata los datos personales enviados a travÃ©s del formulario de contacto, en conformidad con la Ley General de ProtecciÃ³n de Datos Personales de Brasil (LGPD - Ley n.Âº 13.709/2018).',
+        'Esta política explica cómo NextStage Flow trata los datos personales enviados a través del formulario de contacto, en conformidad con la Ley General de Protección de Datos Personales de Brasil (LGPD - Ley nº 13.709/2018).',
       sections: [
         {
           title: '1. Datos recopilados',
           body:
-            'Podemos recopilar nombre, correo electrÃ³nico, telÃ©fono/WhatsApp, mensaje enviado e informaciÃ³n tÃ©cnica necesaria para seguridad y prevenciÃ³n de abuso, como la validaciÃ³n mediante reCAPTCHA.',
+            'Podemos recopilar nombre, correo electrónico, teléfono/WhatsApp, mensaje enviado e información técnica necesaria para seguridad y prevención de abuso, como la validación mediante reCAPTCHA.',
         },
         {
           title: '2. Finalidad del tratamiento',
           body:
-            'Los datos se utilizan para responder tu contacto, elaborar propuestas, mantener comunicaciÃ³n comercial relacionada con tu solicitud y proteger el formulario contra spam, fraude y uso automatizado indebido.',
+            'Los datos se utilizan para responder tu contacto, elaborar propuestas, mantener comunicación comercial relacionada con tu solicitud y proteger el formulario contra spam, fraude y uso automatizado indebido.',
         },
         {
           title: '3. Base legal',
           body:
-            'El tratamiento se realiza con base en tu consentimiento al enviar el formulario y, cuando corresponda, en interÃ©s legÃ­timo para responder solicitudes comerciales y adoptar medidas de seguridad.',
+            'El tratamiento se realiza con base en tu consentimiento al enviar el formulario y, cuando corresponda, en interés legítimo para responder solicitudes comerciales y adoptar medidas de seguridad.',
         },
         {
-          title: '4. ComparticiÃ³n',
+          title: '4. Compartición',
           body:
-            'Para operar el formulario, tus datos pueden ser procesados por proveedores contratados por NextStage Flow, como servicios de envÃ­o de correo y mecanismos de verificaciÃ³n anti-bot, siempre limitados a la finalidad de este contacto.',
+            'Para operar el formulario, tus datos pueden ser procesados por proveedores contratados por NextStage Flow, como servicios de envío de correo y mecanismos de verificación anti-bot, siempre limitados a la finalidad de este contacto.',
         },
         {
-          title: '5. ConservaciÃ³n',
+          title: '5. Conservación',
           body:
-            'Los datos se conservarÃ¡n durante el tiempo necesario para atender tu solicitud, gestionar la relaciÃ³n comercial y cumplir obligaciones legales o regulatorias cuando correspondan.',
+            'Los datos se conservarán durante el tiempo necesario para atender tu solicitud, gestionar la relación comercial y cumplir obligaciones legales o regulatorias cuando correspondan.',
         },
         {
           title: '6. Tus derechos',
           body:
-            'Puedes solicitar confirmaciÃ³n del tratamiento, acceso, correcciÃ³n, actualizaciÃ³n, anonimizaciÃ³n, eliminaciÃ³n, portabilidad o revocaciÃ³n del consentimiento, observando las hipÃ³tesis legales aplicables.',
+            'Puedes solicitar confirmación del tratamiento, acceso, corrección, actualización, anonimización, eliminación, portabilidad o revocación del consentimiento, observando las hipótesis legales aplicables.',
         },
         {
           title: '7. Contacto de privacidad',
           body:
-            'Para asuntos relacionados con datos personales y privacidad, contÃ¡ctanos en nextstageflow@gmail.com.',
+            'Para asuntos relacionados con datos personales y privacidad, contáctanos en nextstageflow@gmail.com.',
         },
       ],
       close: 'Cerrar',
     },
     toasts: {
-      success: 'Mensaje enviado con Ã©xito a NextStage Flow.',
+      success: 'Mensaje enviado con éxito a NextStage Flow.',
       cooldown: 'Espera un minuto antes de enviar otro mensaje.',
       review: 'Revisa los campos de correo y WhatsApp antes de enviar.',
       consent:
-        'Confirma tu acuerdo con la PolÃ­tica de Privacidad y el tratamiento de datos antes de enviar.',
-      emailConfig: 'Configura las claves de EmailJS en el archivo .env para habilitar el envÃ­o.',
+        'Confirma tu acuerdo con la Política de Privacidad y el tratamiento de datos antes de enviar.',
+      emailConfig: 'Configura las claves de EmailJS en el archivo .env para habilitar el envío.',
       recaptchaConfig:
-        'Configura la clave de Google reCAPTCHA en el archivo .env para habilitar el envÃ­o.',
+        'Configura la clave de Google reCAPTCHA en el archivo .env para habilitar el envío.',
       captcha: 'Completa el reCAPTCHA antes de enviar el mensaje.',
       error:
         'No fue posible enviar el correo ahora. Revisa las credenciales de EmailJS y vuelve a intentarlo.',
     },
   },
 };
-
 const seoContent: Record<Language, SeoConfig> = {
   pt: {
     title: 'NextStage Flow | Consultoria, Agilidade, Automacao e Criacao de Sites e Apps',
@@ -1426,15 +1427,6 @@ export default function App() {
         return;
       }
 
-      if (field === 'website') {
-        setFormState((current) => ({
-          ...current,
-          website: value.trim().slice(0, 200),
-        }));
-
-        return;
-      }
-
       setFormState((current) => ({
         ...current,
         [field]: value,
@@ -1485,16 +1477,6 @@ export default function App() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (formState.website) {
-      setFormState(initialFormState);
-      setFormErrors(initialFormErrors);
-      setCaptchaToken('');
-      recaptchaRef.current?.reset();
-      setIsContactModalOpen(false);
-      showToast('success', content.toasts.success);
-      return;
-    }
 
     if (isCooldownActive) {
       showToast('warning', content.toasts.cooldown);
@@ -1550,7 +1532,7 @@ export default function App() {
           lgpd_consent: 'Yes',
           lgpd_consent_timestamp: new Date().toISOString(),
           language,
-          source_email: EMAIL_FROM,
+          source_email: EMAIL_TO,
           destination_email: EMAIL_TO,
           'g-recaptcha-response': captchaToken,
         },
@@ -2502,15 +2484,6 @@ export default function App() {
                   error={Boolean(formErrors.email)}
                   helperText={formErrors.email || content.form.emailHelper}
                 />
-                <TextField
-                  label={content.form.websiteLabel}
-                  value={formState.website}
-                  onChange={handleFieldChange('website')}
-                  autoComplete="off"
-                  tabIndex={-1}
-                  sx={{ display: 'none' }}
-                  inputProps={{ 'aria-hidden': true }}
-                />
                 <Box
                   sx={{
                     display: 'grid',
@@ -2607,6 +2580,9 @@ export default function App() {
                 />
                 <Alert severity="info" sx={{ textAlign: 'left' }}>
                   {content.form.privacyInfo}
+                </Alert>
+                <Alert severity="info" sx={{ textAlign: 'left' }}>
+                  {content.form.securityInfo}
                 </Alert>
                 <FormControlLabel
                   control={
@@ -2798,3 +2774,5 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
+
