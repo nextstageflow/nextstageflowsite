@@ -845,21 +845,21 @@ const translations = {
 };
 const seoContent: Record<Language, SeoConfig> = {
   pt: {
-    title: 'NextStage Flow | NextStage, Next Stage, Automacao, Consultoria e Apps',
+    title: 'NextStage Flow | Automacao personalizada',
     description:
       'NextStage Flow, NextStage e Next Stage: consultoria com agilidade, automacao, melhoria de processos, workflows personalizados e criacao de sites e apps para acelerar resultados.',
     keywords:
       'nextstage, next stage, nextstage flow, nextstageflow, consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados',
   },
   en: {
-    title: 'NextStage Flow | NextStage, Next Stage, Consulting, Automation and Apps',
+    title: 'NextStage Flow | Custom automation',
     description:
       'NextStage Flow, NextStage, and Next Stage deliver consulting, agility, automation, process improvement, custom workflows, and website and app development.',
     keywords:
       'nextstage, next stage, nextstage flow, nextstageflow, consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows',
   },
   es: {
-    title: 'NextStage Flow | NextStage, Next Stage, Consultoria, Automatizacion y Apps',
+    title: 'NextStage Flow | Automatizacion personalizada',
     description:
       'NextStage Flow, NextStage y Next Stage ofrecen consultoria con agilidad, automatizacion, mejora de procesos, workflows personalizados y creacion de sitios y apps.',
     keywords:
