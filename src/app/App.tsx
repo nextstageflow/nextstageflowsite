@@ -843,27 +843,58 @@ const translations = {
     },
   },
 };
+const brandSearchVariants = [
+  'nextstage',
+  'next stage',
+  'nextstage flow',
+  'nextstageflow',
+  'next stage flow',
+  'next stageflow',
+  'nextstage flows',
+  'nexstage flow',
+  'nexstageflow',
+  'next stag flow',
+  'nextstag flow',
+].join(', ');
+
+const brandAlternateNames = [
+  'NextStage',
+  'Next Stage',
+  'NextStage Flow',
+  'nextstageflow',
+  'next stage flow',
+  'Next Stage Flow',
+  'Nextstage Flow',
+  'Next Stageflow',
+  'NextStageFlow',
+  'Nextstageflow',
+  'NexStage Flow',
+  'Nexstage Flow',
+  'Next Stag Flow',
+  'NextStage Flows',
+];
+
 const seoContent: Record<Language, SeoConfig> = {
   pt: {
     title: 'NextStage Flow | Automacao personalizada',
     description:
       'NextStage Flow, NextStage e Next Stage: consultoria com agilidade, automacao, melhoria de processos, workflows personalizados e criacao de sites e apps para acelerar resultados.',
     keywords:
-      'nextstage, next stage, nextstage flow, nextstageflow, consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados',
+      `${brandSearchVariants}, consultoria, agilidade, automacao, melhoria de processos, processos, produtividade, criacao de site e apps, site, app, workflow, workflows, personalizacao, workflows personalizados`,
   },
   en: {
     title: 'NextStage Flow | Custom automation',
     description:
       'NextStage Flow, NextStage, and Next Stage deliver consulting, agility, automation, process improvement, custom workflows, and website and app development.',
     keywords:
-      'nextstage, next stage, nextstage flow, nextstageflow, consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows',
+      `${brandSearchVariants}, consulting, agility, automation, process improvement, processes, productivity, website and app creation, website, app, workflow, workflows, customization, custom workflows`,
   },
   es: {
     title: 'NextStage Flow | Automatizacion personalizada',
     description:
       'NextStage Flow, NextStage y Next Stage ofrecen consultoria con agilidad, automatizacion, mejora de procesos, workflows personalizados y creacion de sitios y apps.',
     keywords:
-      'nextstage, next stage, nextstage flow, nextstageflow, consultoria, agilidad, automatizacion, mejora de procesos, procesos, productividad, creacion de sitios y apps, sitio, app, workflow, workflows, personalizacion, workflows personalizados',
+      `${brandSearchVariants}, consultoria, agilidad, automatizacion, mejora de procesos, procesos, productividad, creacion de sitios y apps, sitio, app, workflow, workflows, personalizacion, workflows personalizados`,
   },
 };
 
@@ -1242,7 +1273,7 @@ export default function App() {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'NextStage Flow',
-        alternateName: ['NextStage', 'Next Stage', 'nextstageflow', 'next stage flow'],
+        alternateName: brandAlternateNames,
         url: baseSiteUrl,
         logo: imageUrl,
         image: imageUrl,
@@ -1253,7 +1284,7 @@ export default function App() {
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
         name: 'NextStage Flow',
-        alternateName: ['NextStage', 'Next Stage', 'nextstageflow', 'next stage flow'],
+        alternateName: brandAlternateNames,
         url: currentPageUrl,
         image: imageUrl,
         logo: imageUrl,
