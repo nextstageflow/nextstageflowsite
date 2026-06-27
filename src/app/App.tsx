@@ -1,4 +1,4 @@
-﻿import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import {
   AsYouType,
@@ -61,7 +61,7 @@ import {
   Close,
   ExpandMore,
 } from '@mui/icons-material';
-import logo from '../imports/Logo_NextStage_Flow_Clean.png';
+import logo from '../imports/Logo_NextStage_Flow_Clean.jpg';
 import flagBr from '../imports/flags/flag-br.svg';
 import flagUs from '../imports/flags/flag-us.svg';
 import flagEs from '../imports/flags/flag-es.svg';
@@ -1097,6 +1097,18 @@ const getInitialLanguage = (): Language => {
   return detectBrowserLanguage();
 };
 
+const trackPixelEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', eventName, params);
+  }
+};
+
+const trackPixelCustomEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('trackCustom', eventName, params);
+  }
+};
+
 const normalizeEmail = (email: string) => email.replace(/\s+/g, '').toLowerCase();
 
 const sanitizeSingleLineInput = (
@@ -1586,6 +1598,7 @@ export default function App() {
       setCooldownUntil(nextCooldownUntil);
       recaptchaRef.current?.reset();
       setIsContactModalOpen(false);
+      trackPixelEvent('Lead', { content_name: 'Contact Form Submission' });
       showToast('success', content.toasts.success);
     } catch (error) {
       console.error('Email sending failed', error);
@@ -1734,6 +1747,7 @@ export default function App() {
               href={whatsappLink}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackPixelEvent('Contact', { content_name: 'Header CTA', method: 'WhatsApp' })}
             >
               <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
                 {content.hero.headerButton}
@@ -1862,7 +1876,10 @@ export default function App() {
               href={whatsappLink}
               target="_blank"
               rel="noreferrer"
-              onClick={closeMobileMenu}
+              onClick={() => {
+                closeMobileMenu();
+                trackPixelEvent('Contact', { content_name: 'Mobile Drawer CTA', method: 'WhatsApp' });
+              }}
               sx={{
                 py: 1.4,
                 background: 'linear-gradient(to right, #f97316, #a855f7)',
@@ -1927,10 +1944,17 @@ export default function App() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackPixelEvent('Contact', { content_name: 'Hero Primary CTA', method: 'WhatsApp' })}
                 >
                   {content.hero.primaryButton}
                 </Button>
-                <Button variant="outlined" size="large" color="primary" href="#servicos">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color="primary"
+                  href="#servicos"
+                  onClick={() => trackPixelCustomEvent('ViewSolutions', { content_name: 'Hero Secondary CTA' })}
+                >
                   {content.hero.secondaryButton}
                 </Button>
               </Stack>
@@ -2180,6 +2204,7 @@ export default function App() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackPixelEvent('Contact', { content_name: 'Contact Card WhatsApp', method: 'WhatsApp' })}
                 >
                   <CardContent>
                     <Box
@@ -2232,7 +2257,10 @@ export default function App() {
                     textDecoration: 'none',
                   }}
                   component="button"
-                  onClick={openContactModal}
+                  onClick={() => {
+                    openContactModal();
+                    trackPixelCustomEvent('OpenContactForm', { content_name: 'Contact Card Form' });
+                  }}
                 >
                   <CardContent>
                     <Box
@@ -2370,6 +2398,7 @@ export default function App() {
                     href={whatsappLink}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackPixelEvent('Contact', { content_name: 'Footer WhatsApp Icon', method: 'WhatsApp' })}
                     sx={{
                       backgroundColor: 'rgba(30, 27, 75, 0.8)',
                       color: '#22c55e',
@@ -2379,7 +2408,10 @@ export default function App() {
                     <Phone />
                   </IconButton>
                   <IconButton
-                    onClick={openContactModal}
+                    onClick={() => {
+                      openContactModal();
+                      trackPixelCustomEvent('OpenContactForm', { content_name: 'Footer Email Icon' });
+                    }}
                     sx={{
                       backgroundColor: 'rgba(30, 27, 75, 0.8)',
                       color: 'secondary.main',
